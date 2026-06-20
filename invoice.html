@@ -19,9 +19,6 @@
         gtag('config', 'G-1C525N5ZX7');
     </script>
 
-    <!-- html2pdf for PDF sharing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
     <style>
         :root {
             --primary: #2563eb; --primary-dark: #1d4ed8; --bg: #f1f5f9;
@@ -52,14 +49,36 @@
             border-radius: 60px; padding: 8px 16px; box-shadow: var(--shadow);
             border: 1px solid var(--border); display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 12px; width: 100%;
-            max-width: 1100px; margin-bottom: 24px;
+            max-width: 1100px; margin-bottom: 24px; position: relative; z-index: 250;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 22px; color: var(--primary); }
         .logo i { font-size: 26px; }
-        nav { display: flex; gap: 8px; flex-wrap: wrap; }
-        nav a { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--text-secondary); padding: 8px 18px; border-radius: 30px; }
-        nav a:hover, nav a.active { background: #eff6ff; color: var(--primary); }
-        nav a.active { background: var(--primary); color: white; }
+
+        /* Desktop nav */
+        .desktop-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+        .desktop-nav a { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--text-secondary); padding: 8px 18px; border-radius: 30px; }
+        .desktop-nav a:hover, .desktop-nav a.active { background: #eff6ff; color: var(--primary); }
+        .desktop-nav a.active { background: var(--primary); color: white; }
+
+        /* Mobile hamburger */
+        .hamburger {
+            display: none; background: none; border: none; font-size: 24px;
+            color: var(--primary); cursor: pointer; padding: 8px;
+        }
+        .mobile-nav {
+            display: none; flex-direction: column; gap: 4px;
+            background: white; border-radius: 20px; padding: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            position: absolute; top: 70px; right: 16px; width: 220px;
+            z-index: 300;
+        }
+        .mobile-nav.show { display: flex; }
+        .mobile-nav a {
+            text-decoration: none; font-weight: 600; font-size: 14px; color: var(--text-secondary);
+            padding: 10px 14px; border-radius: 12px;
+        }
+        .mobile-nav a:hover { background: #eff6ff; color: var(--primary); }
+
         .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; font-weight: 700; font-size: 14px; border-radius: 40px; border: none; cursor: pointer; transition: 0.3s; white-space: nowrap; text-decoration: none; font-family: inherit; }
         .btn-primary { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; }
         .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--primary); }
@@ -90,6 +109,7 @@
         .tax-row input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--tax-border); border-radius: 14px; font-size: 15px; background: white; outline: none; }
         .discount-shipping-row { display: flex; gap: 14px; margin-top: 10px; }
         .discount-shipping-row > div { flex: 1; }
+        @media (max-width: 450px) { .discount-shipping-row { flex-direction: column; } }
         .table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 12px; background: white; }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: #f8fafc; padding: 14px 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748b; text-align: left; border-bottom: 2px solid var(--border); }
@@ -114,9 +134,14 @@
         .dark-mode-btn, .lang-btn { background: transparent; border: 1px solid var(--border); padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
         .dark-mode-btn:hover, .lang-btn:hover { background: #f1f5f9; }
 
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .hamburger { display: block; }
+        }
+
         @media print {
             body { background: white; padding: 0; margin: 0; display: block; }
-            .top-bar, .dark-mode-btn, .lang-btn, .ad-sidebar, .action-bar, .toast, footer, .contact-info, .add-item-btn { display: none !important; }
+            .top-bar, .hamburger, .mobile-nav, .dark-mode-btn, .lang-btn, .ad-sidebar, .action-bar, .toast, footer, .contact-info, .add-item-btn { display: none !important; }
             .main-layout { display: block; margin: 0; padding: 0; width: 100%; }
             .invoice-card { box-shadow: none; border: none; border-radius: 0; background: white; backdrop-filter: none; padding: 20px; margin: 0 auto; width: 100%; max-width: 100%; min-width: auto; }
             .shop-header { border-bottom: 1px solid #ccc; margin-bottom: 16px; padding-bottom: 12px; }
@@ -134,7 +159,7 @@
     <!-- ── TOP NAVIGATION ── -->
     <div class="top-bar">
         <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
-        <nav>
+        <nav class="desktop-nav">
             <a href="index.html">Home</a>
             <a href="invoice.html" class="active">Generator</a>
             <a href="api-contact.html">API & Contact</a>
@@ -145,6 +170,15 @@
         <div style="display:flex; gap:8px;">
             <button class="lang-btn" id="langBtn" title="Change Language"><i class="fas fa-language"></i></button>
             <button class="dark-mode-btn" id="darkModeBtn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+        </div>
+        <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html">Home</a>
+            <a href="invoice.html" class="active">Generator</a>
+            <a href="api-contact.html">API & Contact</a>
+            <a href="terms.html">Terms</a>
+            <a href="career.html">Careers</a>
+            <a href="advertise.html">Advertise</a>
         </div>
     </div>
 
@@ -190,9 +224,9 @@
             <div class="tax-box" id="taxBox">
                 <h4><i class="fas fa-percent"></i> Tax Settings</h4>
                 <div class="tax-row" id="taxRow">
-                    <div id="tax1Group"><label id="tax1Label">CGST%</label><input id="tax1Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
-                    <div id="tax2Group"><label id="tax2Label">SGST%</label><input id="tax2Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
-                    <div id="tax3Group" style="display:none;"><label id="tax3Label">Cess%</label><input id="tax3Input" type="number" step="any" value="0" oninput="calcTotal()"></div>
+                    <div id="tax1Group"><label>CGST%</label><input id="tax1Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax2Group"><label>SGST%</label><input id="tax2Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax3Group" style="display:none;"><label>Cess%</label><input id="tax3Input" type="number" step="any" value="0" oninput="calcTotal()"></div>
                 </div>
                 <!-- Discount & Shipping -->
                 <div class="discount-shipping-row">
@@ -206,9 +240,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Item / Service</th><th>Qty</th>
-                            <th>Rate (<span id="currencyTableSymbol">₹</span>)</th>
-                            <th>Amount</th><th></th>
+                            <th>Item / Service</th><th>Qty</th><th>Rate (<span id="currencyTableSymbol">₹</span>)</th><th>Amount</th><th></th>
                         </tr>
                     </thead>
                     <tbody id="itemsBody"></tbody>
@@ -227,9 +259,9 @@
                 <div class="summary-block">
                     <div class="summary-row"><span>Subtotal</span><span><span id="currencySubtotal">₹</span><span id="subtotal">0.00</span></span></div>
                     <div class="summary-row" id="discountRow" style="display:none;"><span>Discount (<span id="discountRateDisp">0</span>%)</span><span>-<span id="currencyDiscount">₹</span><span id="discountVal">0.00</span></span></div>
-                    <div class="summary-row" id="tax1SummaryRow"><span id="tax1SummaryLabel">CGST (<span id="tax1RateDisp">2.5</span>%)</span><span><span id="currencyTax1">₹</span><span id="tax1Val">0.00</span></span></div>
-                    <div class="summary-row" id="tax2SummaryRow"><span id="tax2SummaryLabel">SGST (<span id="tax2RateDisp">2.5</span>%)</span><span><span id="currencyTax2">₹</span><span id="tax2Val">0.00</span></span></div>
-                    <div class="summary-row" id="tax3SummaryRow" style="display:none;"><span id="tax3SummaryLabel">Cess (<span id="tax3RateDisp">0</span>%)</span><span><span id="currencyTax3">₹</span><span id="tax3Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax1SummaryRow"><span>CGST (<span id="tax1RateDisp">2.5</span>%)</span><span><span id="currencyTax1">₹</span><span id="tax1Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax2SummaryRow"><span>SGST (<span id="tax2RateDisp">2.5</span>%)</span><span><span id="currencyTax2">₹</span><span id="tax2Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax3SummaryRow" style="display:none;"><span>Cess (<span id="tax3RateDisp">0</span>%)</span><span><span id="currencyTax3">₹</span><span id="tax3Val">0.00</span></span></div>
                     <div class="summary-row" id="shippingRow" style="display:none;"><span>Shipping</span><span><span id="currencyShipping">₹</span><span id="shippingVal">0.00</span></span></div>
                     <div class="summary-row total"><span>Grand Total</span><span><span id="currencyGrand">₹</span><span id="grandTotal">0.00</span></span></div>
                 </div>
@@ -238,7 +270,6 @@
             <!-- Action Buttons -->
             <div class="action-bar">
                 <button class="btn btn-primary" id="saveLocalBtn"><i class="fas fa-save"></i> Save Invoice</button>
-                <button class="btn btn-outline" id="shareBtn"><i class="fas fa-share-alt"></i> Share PDF</button>
                 <button class="btn btn-outline" id="printBtn"><i class="fas fa-print"></i> Print</button>
             </div>
 
@@ -275,7 +306,17 @@
         }
 
         // ═══════════════════════
-        // CALCULATION (automatic)
+        // MOBILE MENU TOGGLE
+        // ═══════════════════════
+        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+            document.getElementById('mobileNav').classList.toggle('show');
+        });
+        document.querySelectorAll('#mobileNav a').forEach(link => {
+            link.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('show'));
+        });
+
+        // ═══════════════════════
+        // CALCULATION – FULLY WORKING
         // ═══════════════════════
         function addRow() {
             const tr = document.createElement('tr');
@@ -284,6 +325,7 @@
         }
 
         function calcTotal() {
+            // 1. Subtotal
             let subtotal = 0;
             document.querySelectorAll('#itemsBody tr').forEach(row => {
                 const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
@@ -293,26 +335,35 @@
                 subtotal += amt;
             });
 
-            const discountPercent = parseFloat(document.getElementById('discountInput').value) || 0;
-            const shipping = parseFloat(document.getElementById('shippingInput').value) || 0;
+            // 2. Discount & Shipping
+            const discountPercent = parseFloat(document.getElementById('discountInput')?.value) || 0;
+            const shipping = parseFloat(document.getElementById('shippingInput')?.value) || 0;
 
+            // 3. Apply discount to subtotal
             const discountedSubtotal = subtotal * (1 - discountPercent / 100);
             const discountAmount = subtotal - discountedSubtotal;
 
-            const tax1Rate = parseFloat(document.getElementById('tax1Input').value) || 0;
-            const tax2Rate = parseFloat(document.getElementById('tax2Input').value) || 0;
-            const tax3Rate = parseFloat(document.getElementById('tax3Input').value) || 0;
+            // 4. Tax rates
+            const tax1Rate = parseFloat(document.getElementById('tax1Input')?.value) || 0;
+            const tax2Rate = parseFloat(document.getElementById('tax2Input')?.value) || 0;
+            const tax3Rate = parseFloat(document.getElementById('tax3Input')?.value) || 0;
             const tax1Val = discountedSubtotal * tax1Rate / 100;
             const tax2Val = discountedSubtotal * tax2Rate / 100;
             const tax3Val = discountedSubtotal * tax3Rate / 100;
+
+            // 5. Grand total
             const grand = discountedSubtotal + tax1Val + tax2Val + tax3Val + shipping;
 
+            // 6. Update UI
             document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-            document.getElementById('discountRow').style.display = discountPercent ? 'flex' : 'none';
+
+            const discountRow = document.getElementById('discountRow');
+            discountRow.style.display = discountPercent ? 'flex' : 'none';
             if (discountPercent) {
                 document.getElementById('discountRateDisp').textContent = discountPercent;
                 document.getElementById('discountVal').textContent = discountAmount.toFixed(2);
             }
+
             document.getElementById('tax1Val').textContent = tax1Val.toFixed(2);
             document.getElementById('tax2Val').textContent = tax2Val.toFixed(2);
             document.getElementById('tax3Val').textContent = tax3Val.toFixed(2);
@@ -320,14 +371,17 @@
             document.getElementById('tax2RateDisp').textContent = tax2Rate;
             document.getElementById('tax3RateDisp').textContent = tax3Rate;
 
-            document.getElementById('shippingRow').style.display = shipping ? 'flex' : 'none';
-            if (shipping) document.getElementById('shippingVal').textContent = shipping.toFixed(2);
+            const shippingRow = document.getElementById('shippingRow');
+            shippingRow.style.display = shipping ? 'flex' : 'none';
+            if (shipping) {
+                document.getElementById('shippingVal').textContent = shipping.toFixed(2);
+            }
 
             document.getElementById('grandTotal').textContent = grand.toFixed(2);
         }
 
         // ═══════════════════════
-        // SAVE, SHARE, PRINT
+        // SAVE & PRINT
         // ═══════════════════════
         function saveLocally() {
             const inv = {
@@ -370,51 +424,6 @@
             if (navigator.sendBeacon) navigator.sendBeacon('https://api.countapi.xyz/hit/invoiceflow/invoices');
         }
 
-        async function generatePDFBlob() {
-            const original = document.getElementById('printableInvoice');
-            const clone = original.cloneNode(true);
-            clone.querySelector('.action-bar')?.remove();
-            clone.querySelector('.contact-info')?.remove();
-            clone.querySelector('.add-item-btn')?.remove();
-            clone.querySelectorAll('td button').forEach(b => b.remove());
-            clone.querySelectorAll('input, textarea, select').forEach(input => {
-                const span = document.createElement('span');
-                if (input.tagName === 'SELECT') span.textContent = input.options[input.selectedIndex]?.text || '';
-                else span.textContent = input.value || '';
-                input.parentNode.replaceChild(span, input);
-            });
-            const logoImg = clone.querySelector('#logoImg');
-            if (logoImg && logoImg.style.display !== 'block') logoImg.remove();
-            clone.querySelector('#logoPlaceholder')?.remove();
-            clone.style.cssText = 'background:white;padding:20px;font-family:Inter,sans-serif;color:#000;';
-            const wrapper = document.createElement('div');
-            wrapper.style.cssText = 'position:fixed;left:-9999px;top:0;width:210mm;background:white;z-index:9999;';
-            wrapper.appendChild(clone);
-            document.body.appendChild(wrapper);
-            const opt = { margin:[0,0,0,0], image:{type:'jpeg',quality:1}, html2canvas:{scale:2,useCORS:true}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} };
-            const blob = await html2pdf().set(opt).from(wrapper).outputPdf('blob');
-            document.body.removeChild(wrapper);
-            return blob;
-        }
-
-        async function sharePDF() {
-            showToast('📄 Generating PDF...');
-            try {
-                const blob = await generatePDFBlob();
-                const file = new File([blob], 'invoice.pdf', { type: 'application/pdf' });
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: 'Invoice' });
-                } else {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url; a.download = 'invoice.pdf';
-                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                    showToast('📥 PDF downloaded (share not supported)');
-                }
-            } catch (e) { showToast('⚠️ Could not share PDF. Try Print.'); }
-        }
-
         function printInvoice() { window.print(); }
         function loadLogo(e) {
             const file = e.target.files[0]; if(!file) return;
@@ -455,19 +464,16 @@
         else applyDarkMode(false);
 
         addRow();
-        calcTotal(); // initial calculation
+        calcTotal();  // ensure discount/shipping rows are set correctly on load
 
         // ═══════════════════════
         // EVENT LISTENERS
         // ═══════════════════════
         document.getElementById('addItemBtn').addEventListener('click', () => { addRow(); calcTotal(); });
         document.getElementById('saveLocalBtn').addEventListener('click', saveLocally);
-        document.getElementById('shareBtn').addEventListener('click', sharePDF);
         document.getElementById('printBtn').addEventListener('click', printInvoice);
         document.getElementById('darkModeBtn').addEventListener('click', () => applyDarkMode(!document.body.classList.contains('dark')));
-        document.getElementById('langBtn').addEventListener('click', () => {
-            alert('Language toggle works – Hindi can be added here');
-        });
+        document.getElementById('langBtn').addEventListener('click', () => alert('Language toggle works – Hindi can be added here'));
 
         ['shopName','shopAddress','shopContact','bankDetails'].forEach(id => {
             document.getElementById(id).addEventListener('input', () => {

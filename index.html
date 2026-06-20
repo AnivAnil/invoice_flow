@@ -10,15 +10,15 @@
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1816153546500274" crossorigin="anonymous"></script>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C525N5ZX7"></script>
-        <script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C525N5ZX7"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-1C525N5ZX7');
-        </script>
+    </script>
 
     <style>
         :root {
@@ -33,24 +33,38 @@
             --shadow: 0 8px 30px rgba(0,0,0,0.04);
             --transition: 0.25s ease;
         }
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --shadow: 0 8px 30px rgba(0,0,0,0.3);
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+        }
+
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: #ffffff;
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }
         .container { max-width: 1200px; margin:0 auto; padding:0 30px; }
         header {
             background: rgba(255,255,255,0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top:0;
             z-index:100;
             padding: 16px 0;
+            transition: background 0.3s, border-color 0.3s;
         }
         .header-inner {
             display: flex;
@@ -149,6 +163,22 @@
         }
         .btn-outline:hover { background: #f0f4ff; }
 
+        /* Dark mode toggle & language button */
+        .dark-mode-btn, .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .dark-mode-btn:hover, .lang-btn:hover { background: #f1f5f9; }
+
         /* Sections */
         .section { margin: 100px 0; }
         .hero {
@@ -156,13 +186,14 @@
             padding: 100px 0 80px;
             background: radial-gradient(circle at 50% 0%, #f0f4ff 0%, transparent 60%);
         }
+        body.dark .hero { background: radial-gradient(circle at 50% 0%, #1e293b 0%, transparent 60%); }
         .hero h1 {
             font-size: clamp(42px, 8vw, 64px);
             font-weight: 900;
             letter-spacing: -2px;
             line-height: 1.1;
             margin-bottom: 20px;
-            color: #0f172a;
+            color: var(--text);
         }
         .hero h1 span { color: var(--primary); }
         .hero p {
@@ -190,7 +221,7 @@
             text-align: center;
             margin-bottom: 16px;
             letter-spacing: -0.5px;
-            color: #0f172a;
+            color: var(--text);
         }
         .section-subtitle {
             text-align: center;
@@ -209,6 +240,7 @@
             position: relative;
             overflow: hidden;
         }
+        body.dark .mission-card { background: #1e293b; }
         .mission-card::before {
             content: '';
             position: absolute;
@@ -228,8 +260,8 @@
             gap: 24px;
         }
         .feature-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 24px;
             padding: 32px 28px;
             transition: var(--transition);
@@ -257,8 +289,8 @@
 
         .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; }
         .audience-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 24px;
             padding: 30px 24px;
             text-align: center;
@@ -277,11 +309,11 @@
             flex: 1;
             min-width: 200px;
             text-align: center;
-            background: #ffffff;
+            background: var(--surface);
             border-radius: 30px;
             padding: 36px 24px;
             box-shadow: 0 4px 14px rgba(0,0,0,0.02);
-            border: 1px solid #f1f5f9;
+            border: 1px solid var(--border);
         }
         .step-circle {
             width: 48px;
@@ -304,36 +336,21 @@
             padding: 60px 50px;
             text-align: center;
         }
+        body.dark .why-free { background: #1e293b; }
         .why-free h2 { font-size: 32px; font-weight: 900; margin-bottom: 16px; }
         .why-free p { font-size: 18px; opacity: 0.9; max-width: 700px; margin: 0 auto; }
 
-        .recent-section { background: #f8fafc; border-radius: 40px; padding: 60px 50px; }
-        .recent-section table { width: 100%; border-collapse: collapse; }
-        .recent-section th {
-            text-align: left;
-            padding: 16px 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            border-bottom: 2px solid #e2e8f0;
-        }
-        .recent-section td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-        .badge { padding: 5px 12px; border-radius: 30px; font-size: 12px; font-weight: 700; }
-        .badge-paid { background: #dcfce7; color: #166534; }
-        .badge-pending { background: #fef3c7; color: #92400e; }
-
         .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
         .faq-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 24px;
             padding: 24px;
         }
 
         .contact-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 30px;
             padding: 30px 40px;
             display: flex;
@@ -369,12 +386,31 @@
             font-weight: 600;
         }
 
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            display: inline-block;
+            text-align: center;
+        }
+        .stat-number { font-size: 36px; font-weight: 900; color: var(--primary); }
+        .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
         @media (max-width: 768px) {
             .desktop-nav { display: none; }
             .hamburger { display: block; }
             .mobile-nav.show { display: flex; }
             .section { margin: 60px 0; }
-            .mission-card, .recent-section, .why-free { padding: 40px 24px; }
+            .mission-card, .why-free { padding: 40px 24px; }
+            .two-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -384,46 +420,92 @@
         <div class="container header-inner">
             <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
             <nav class="desktop-nav">
-                <a href="index.html" class="active">Home</a>
-                <a href="invoice.html">Generator</a>
-                <a href="api-contact.html">API & Contact</a>
-                <a href="terms.html">Terms</a>
-                <a href="career.html">Careers</a>
-                <a href="advertise.html">Advertise</a>
+                <a href="index.html" class="active" data-lang="nav_home">Home</a>
+                <a href="invoice.html" data-lang="nav_generator">Generator</a>
+                <a href="api-contact.html" data-lang="nav_api">API & Contact</a>
+                <a href="terms.html" data-lang="nav_terms">Terms</a>
+                <a href="career.html" data-lang="nav_careers">Careers</a>
+                <a href="advertise.html" data-lang="nav_advertise">Advertise</a>
             </nav>
-            <a href="invoice.html" class="btn btn-primary desktop-nav"><i class="fas fa-plus"></i> Create Invoice</a>
+            <div style="display:flex; gap:12px; align-items:center;">
+                <button class="lang-btn" id="langBtn" title="Change Language"><i class="fas fa-language"></i></button>
+                <button class="dark-mode-btn" id="darkModeBtn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+                <a href="invoice.html" class="btn btn-primary desktop-nav"><i class="fas fa-plus"></i> <span data-lang="create_invoice">Create Invoice</span></a>
+            </div>
             <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
         </div>
         <div class="mobile-nav" id="mobileNav">
-            <a href="index.html">Home</a>
-            <a href="invoice.html">Generator</a>
-            <a href="api-contact.html">API</a>
-            <a href="terms.html">Terms</a>
-            <a href="career.html">Careers</a>
-            <a href="advertise.html">Advertise</a>
+            <a href="index.html" data-lang="nav_home">Home</a>
+            <a href="invoice.html" data-lang="nav_generator">Generator</a>
+            <a href="api-contact.html" data-lang="nav_api">API</a>
+            <a href="terms.html" data-lang="nav_terms">Terms</a>
+            <a href="career.html" data-lang="nav_careers">Careers</a>
+            <a href="advertise.html" data-lang="nav_advertise">Advertise</a>
             <a href="privacy.html">Privacy</a>
-            <a href="invoice.html" class="btn btn-primary" style="margin-top:8px;">Create Invoice</a>
+            <a href="invoice.html" class="btn btn-primary" style="margin-top:8px;" data-lang="create_invoice">Create Invoice</a>
         </div>
     </header>
 
     <!-- ── HERO ── -->
     <section class="hero">
         <div class="container">
-            <h1>Invoicing without<br><span>limits or fees</span></h1>
-            <p>Create professional, GST‑ready invoices instantly — no account needed. Built for every business, from local shops to international enterprises.</p>
+            <h1 data-lang="hero_title">Invoicing without<br><span>limits or fees</span></h1>
+            <p data-lang="hero_subtitle">Create professional, GST‑ready invoices instantly — no account needed. Built for every business, from local shops to international enterprises.</p>
             <div class="hero-buttons">
-                <a href="invoice.html" class="btn btn-primary"><i class="fas fa-bolt"></i> Start Now</a>
-                <a href="#mission" class="btn btn-outline">Our Mission</a>
+                <a href="invoice.html" class="btn btn-primary"><i class="fas fa-bolt"></i> <span data-lang="start_now">Start Now</span></a>
+                <a href="#mission" class="btn btn-outline" data-lang="our_mission">Our Mission</a>
             </div>
         </div>
     </section>
 
-    <!-- ── MISSION ── -->
+    <!-- ── HARDCODED COUNTER ── -->
+    <div class="container" style="text-align:center; margin: 40px 0;">
+        <div class="stat-card">
+            <div class="stat-number">100+</div>
+            <div class="stat-label" data-lang="counter_label">Invoices Created Worldwide</div>
+        </div>
+    </div>
+
+    <!-- ── OUR STORY / MISSION ── -->
     <section id="mission" class="section">
         <div class="container">
+            <span class="section-label" data-lang="mission_label">Our Mission</span>
+            <h2 class="section-title" data-lang="mission_title">Why we built InvoiceFlow</h2>
+            <p class="section-subtitle" data-lang="mission_subtitle">We started with a simple question: why should anyone pay to create a bill?</p>
             <div class="mission-card">
-                <h2>🌐 Free Invoicing Should Be a Basic Right</h2>
-                <p>We believe every entrepreneur — whether running a small tea stall or a multinational — deserves powerful, beautiful invoicing tools without paying a single rupee. InvoiceFlow is our commitment to a world where financial tools are accessible to all.</p>
+                <h2 data-lang="mission_card_title">🌐 Free Invoicing Should Be a Basic Right</h2>
+                <p data-lang="mission_card_text">We believe every entrepreneur — whether running a small tea stall or a multinational — deserves powerful, beautiful invoicing tools without paying a single rupee. InvoiceFlow is our commitment to a world where financial tools are accessible to all. Built in India, for the world.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── THE PROBLEM WE SOLVE ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label" data-lang="problem_label">The Problem</span>
+            <h2 class="section-title" data-lang="problem_title">Invoicing shouldn’t be expensive or complicated</h2>
+            <p class="section-subtitle" data-lang="problem_subtitle">Existing software forces you to sign up, pay monthly fees, or deal with bloated features. We asked: what if invoicing was as simple as filling a form?</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-weight:800; margin-bottom:12px;" data-lang="old_way">The old way</h3>
+                    <ul style="color:var(--text-secondary); font-size:16px; line-height:2;" data-lang-list="old_way_list">
+                        <li>❌ Create an account & remember passwords</li>
+                        <li>❌ Pay monthly subscriptions</li>
+                        <li>❌ Your data sits on someone else’s server</li>
+                        <li>❌ Limited invoices on free plans</li>
+                        <li>❌ Complicated interfaces</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-weight:800; margin-bottom:12px;" data-lang="new_way">The InvoiceFlow way</h3>
+                    <ul style="color:var(--text-secondary); font-size:16px; line-height:2;" data-lang-list="new_way_list">
+                        <li>✅ Open the page & start typing</li>
+                        <li>✅ Completely free, forever</li>
+                        <li>✅ 100% private – stays in your browser</li>
+                        <li>✅ Unlimited invoices, no caps</li>
+                        <li>✅ Clean, simple, intuitive</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -431,40 +513,16 @@
     <!-- ── FEATURES ── -->
     <section class="section">
         <div class="container">
-            <span class="section-label">Why InvoiceFlow</span>
-            <h2 class="section-title">Everything you need, completely free</h2>
-            <p class="section-subtitle">No hidden costs, no "premium" upgrades. Just a powerful invoice generator that works wherever you are.</p>
+            <span class="section-label" data-lang="features_label">Why InvoiceFlow</span>
+            <h2 class="section-title" data-lang="features_title">Everything you need, completely free</h2>
+            <p class="section-subtitle" data-lang="features_subtitle">No hidden costs, no "premium" upgrades. Just a powerful invoice generator that works wherever you are.</p>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-infinity"></i></div>
-                    <h4>Unlimited Invoices</h4>
-                    <p>Generate as many invoices as you need, forever. No caps, no limits.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4>100% Private</h4>
-                    <p>Your data never leaves your browser. We don’t see, collect, or store anything.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
-                    <h4>Auto Tax</h4>
-                    <p>CGST, SGST, Cess calculated live as you type. Adaptable to any tax system.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h4>Mobile First</h4>
-                    <p>Create and send invoices from any device. Works perfectly on phones and tablets.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-print"></i></div>
-                    <h4>Print & Share</h4>
-                    <p>One‑click print or share via WhatsApp, email, or link. Professional output always.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-save"></i></div>
-                    <h4>Auto‑Save</h4>
-                    <p>Your shop details and invoices saved locally. Pick up right where you left off.</p>
-                </div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-infinity"></i></div><h4 data-lang="feature1_title">Unlimited Invoices</h4><p data-lang="feature1_text">Generate as many invoices as you need, forever. No caps, no limits.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h4 data-lang="feature2_title">100% Private</h4><p data-lang="feature2_text">Your data never leaves your browser. We don’t see, collect, or store anything.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-calculator"></i></div><h4 data-lang="feature3_title">Auto Tax</h4><p data-lang="feature3_text">CGST, SGST, Cess calculated live as you type. Adaptable to any tax system.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h4 data-lang="feature4_title">Mobile First</h4><p data-lang="feature4_text">Create and send invoices from any device. Works perfectly on phones and tablets.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-print"></i></div><h4 data-lang="feature5_title">Print & Share</h4><p data-lang="feature5_text">One‑click print or share via WhatsApp, email, or link. Professional output always.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-save"></i></div><h4 data-lang="feature6_title">Auto‑Save</h4><p data-lang="feature6_text">Your shop details and invoices saved locally. Pick up right where you left off.</p></div>
             </div>
         </div>
     </section>
@@ -472,30 +530,14 @@
     <!-- ── WHO USES IT ── -->
     <section class="section">
         <div class="container">
-            <span class="section-label">Trusted by</span>
-            <h2 class="section-title">From small shops to global teams</h2>
-            <p class="section-subtitle">No matter your size or location, InvoiceFlow fits seamlessly into your workflow.</p>
+            <span class="section-label" data-lang="audience_label">Trusted by</span>
+            <h2 class="section-title" data-lang="audience_title">From small shops to global teams</h2>
+            <p class="section-subtitle" data-lang="audience_subtitle">No matter your size or location, InvoiceFlow fits seamlessly into your workflow.</p>
             <div class="audience-grid">
-                <div class="audience-card">
-                    <i class="fas fa-store"></i>
-                    <h4>Retailers & Kirana Stores</h4>
-                    <p>Generate GST bills instantly at the counter without any accounting knowledge.</p>
-                </div>
-                <div class="audience-card">
-                    <i class="fas fa-laptop-code"></i>
-                    <h4>Freelancers & Consultants</h4>
-                    <p>Send sleek, branded invoices to clients around the world in seconds.</p>
-                </div>
-                <div class="audience-card">
-                    <i class="fas fa-building"></i>
-                    <h4>Mid‑Sized Companies</h4>
-                    <p>Empower multiple departments to invoice without installing software.</p>
-                </div>
-                <div class="audience-card">
-                    <i class="fas fa-globe"></i>
-                    <h4>Enterprises</h4>
-                    <p>Integrate with our free API to automate invoice creation at scale.</p>
-                </div>
+                <div class="audience-card"><i class="fas fa-store"></i><h4 data-lang="aud1_title">Retailers & Kirana Stores</h4><p data-lang="aud1_text">Generate GST bills instantly at the counter without any accounting knowledge.</p></div>
+                <div class="audience-card"><i class="fas fa-laptop-code"></i><h4 data-lang="aud2_title">Freelancers & Consultants</h4><p data-lang="aud2_text">Send sleek, branded invoices to clients around the world in seconds.</p></div>
+                <div class="audience-card"><i class="fas fa-building"></i><h4 data-lang="aud3_title">Mid‑Sized Companies</h4><p data-lang="aud3_text">Empower multiple departments to invoice without installing software.</p></div>
+                <div class="audience-card"><i class="fas fa-globe"></i><h4 data-lang="aud4_title">Enterprises</h4><p data-lang="aud4_text">Integrate with our free API to automate invoice creation at scale.</p></div>
             </div>
         </div>
     </section>
@@ -503,25 +545,58 @@
     <!-- ── HOW IT WORKS ── -->
     <section class="section">
         <div class="container">
-            <span class="section-label">Get started in seconds</span>
-            <h2 class="section-title">How it works</h2>
-            <p class="section-subtitle">You're three steps away from your first professional invoice.</p>
+            <span class="section-label" data-lang="how_label">Get started in seconds</span>
+            <h2 class="section-title" data-lang="how_title">How it works</h2>
+            <p class="section-subtitle" data-lang="how_subtitle">You're three steps away from your first professional invoice.</p>
             <div class="how-row">
-                <div class="how-step">
-                    <div class="step-circle">1</div>
-                    <h4>Fill Your Business Details</h4>
-                    <p>Once saved, they appear automatically every time you open the tool.</p>
-                </div>
-                <div class="how-step">
-                    <div class="step-circle">2</div>
-                    <h4>Add Customer & Items</h4>
-                    <p>Enter bill‑to info and line items. Taxes are calculated live.</p>
-                </div>
-                <div class="how-step">
-                    <div class="step-circle">3</div>
-                    <h4>Save, Print or Share</h4>
-                    <p>Your invoice is ready. Save locally, print directly, or send via WhatsApp.</p>
-                </div>
+                <div class="how-step"><div class="step-circle">1</div><h4 data-lang="step1_title">Fill Your Business Details</h4><p data-lang="step1_text">Once saved, they appear automatically every time you open the tool.</p></div>
+                <div class="how-step"><div class="step-circle">2</div><h4 data-lang="step2_title">Add Customer & Items</h4><p data-lang="step2_text">Enter bill‑to info and line items. Taxes are calculated live.</p></div>
+                <div class="how-step"><div class="step-circle">3</div><h4 data-lang="step3_title">Save, Print or Share</h4><p data-lang="step3_text">Your invoice is ready. Save locally, print directly, or send via WhatsApp.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── REAL‑WORLD IMPACT ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label" data-lang="global_label">Global Reach</span>
+            <h2 class="section-title" data-lang="global_title">Built for the world</h2>
+            <p class="section-subtitle" data-lang="global_subtitle">InvoiceFlow isn’t limited by borders. It adapts to your local tax rules, currency, and language.</p>
+            <div class="how-row" style="gap:30px;">
+                <div class="how-step"><div class="step-circle">🇮🇳</div><h4 data-lang="country1_title">India GST</h4><p data-lang="country1_text">Built‑in CGST, SGST, Cess with editable rates.</p></div>
+                <div class="how-step"><div class="step-circle">🇺🇸</div><h4 data-lang="country2_title">USA Sales Tax</h4><p data-lang="country2_text">Add state tax labels and rates as needed.</p></div>
+                <div class="how-step"><div class="step-circle">🇪🇺</div><h4 data-lang="country3_title">European VAT</h4><p data-lang="country3_text">Set VAT rate, currency (€), and download VAT‑ready invoices.</p></div>
+                <div class="how-step"><div class="step-circle">🇦🇪</div><h4 data-lang="country4_title">UAE & Others</h4><p data-lang="country4_text">Use any currency symbol and tax structure.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WHAT SETS US APART ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label" data-lang="commitment_label">Our Commitment</span>
+            <h2 class="section-title" data-lang="commitment_title">What makes InvoiceFlow different</h2>
+            <p class="section-subtitle" data-lang="commitment_subtitle">We’re not just another free tool. We’re built on principles that put you first.</p>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-lock"></i></div><h4 data-lang="diff1_title">Zero Data Collection</h4><p data-lang="diff1_text">Unlike most SaaS platforms, we never see your invoices, customer data, or business details. Everything stays on your device.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-code"></i></div><h4 data-lang="diff2_title">Open & Transparent</h4><p data-lang="diff2_text">Our code is open source. Anyone can inspect, modify, or self‑host InvoiceFlow. No hidden backdoors.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div><h4 data-lang="diff3_title">Community First</h4><p data-lang="diff3_text">We listen to feedback and build features the community requests. No corporate roadmap – just what you actually need.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-cloud-sun"></i></div><h4 data-lang="diff4_title">No Account, No Hassle</h4><p data-lang="diff4_text">You don’t need to create an account, verify an email, or remember a password. Just open and use.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── ROADMAP ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label" data-lang="roadmap_label">Future Plans</span>
+            <h2 class="section-title" data-lang="roadmap_title">Where we’re headed</h2>
+            <p class="section-subtitle" data-lang="roadmap_subtitle">InvoiceFlow is constantly evolving. Here’s what we’re working on next.</p>
+            <div class="how-row" style="gap:30px;">
+                <div class="how-step"><div class="step-circle">🎨</div><h4 data-lang="plan1_title">More Templates</h4><p data-lang="plan1_text">Professional invoice designs for different industries.</p></div>
+                <div class="how-step"><div class="step-circle">📱</div><h4 data-lang="plan2_title">PWA Support</h4><p data-lang="plan2_text">Install InvoiceFlow as an app on your phone for offline use.</p></div>
+                <div class="how-step"><div class="step-circle">🌍</div><h4 data-lang="plan3_title">Multi‑Language</h4><p data-lang="plan3_text">Translate the interface into Hindi, Spanish, French, and more.</p></div>
+                <div class="how-step"><div class="step-circle">📊</div><h4 data-lang="plan4_title">Basic Dashboard</h4><p data-lang="plan4_text">See your invoice history and totals at a glance (still private).</p></div>
             </div>
         </div>
     </section>
@@ -530,19 +605,8 @@
     <section class="section">
         <div class="container">
             <div class="why-free">
-                <h2>Why is it completely free?</h2>
-                <p>We want to level the playing field. Small businesses shouldn't have to pay for basic tools. InvoiceFlow is supported by optional advertising and premium API plans — but the core invoice generator will remain free forever. No tricks.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── RECENT INVOICES ── -->
-    <section class="section">
-        <div class="container">
-            <span class="section-label">Latest activity</span>
-            <h2 class="section-title">Recently created invoices</h2>
-            <div class="recent-section" id="recentInvoicesContainer">
-                <p style="text-align:center; color:var(--text-secondary);">No invoices yet. <a href="invoice.html" style="color:var(--primary);">Create your first one →</a></p>
+                <h2 data-lang="why_free_title">Why is it completely free?</h2>
+                <p data-lang="why_free_text">We want to level the playing field. Small businesses shouldn't have to pay for basic tools. InvoiceFlow is supported by optional advertising and premium API plans — but the core invoice generator will remain free forever. No tricks.</p>
             </div>
         </div>
     </section>
@@ -550,35 +614,35 @@
     <!-- ── FAQ ── -->
     <section class="section">
         <div class="container">
-            <span class="section-label">Quick answers</span>
-            <h2 class="section-title">Frequently asked questions</h2>
+            <span class="section-label" data-lang="faq_label">Quick answers</span>
+            <h2 class="section-title" data-lang="faq_title">Frequently asked questions</h2>
             <div class="faq-grid">
-                <div class="faq-card"><h4>Is there any hidden charge?</h4><p>No. You can generate unlimited invoices completely free. No forced upgrades.</p></div>
-                <div class="faq-card"><h4>Will my data be safe?</h4><p>Absolutely. Everything stays in your browser's local storage. We don't have access.</p></div>
-                <div class="faq-card"><h4>Can I use this for international billing?</h4><p>Yes! You can customise tax labels, currency symbol, and formats to match any country.</p></div>
+                <div class="faq-card"><h4 data-lang="faq1_q">Is there any hidden charge?</h4><p data-lang="faq1_a">No. You can generate unlimited invoices completely free. No forced upgrades.</p></div>
+                <div class="faq-card"><h4 data-lang="faq2_q">Will my data be safe?</h4><p data-lang="faq2_a">Absolutely. Everything stays in your browser's local storage. We don't have access.</p></div>
+                <div class="faq-card"><h4 data-lang="faq3_q">Can I use this for international billing?</h4><p data-lang="faq3_a">Yes! You can customise tax labels, currency symbol, and formats to match any country.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- ── AD BANNER (replace placeholder with your real AdSense unit) ── -->
+    <!-- ── AD BANNER ── -->
     <div class="container ad-banner">📢 Your Ad Here – 728x90 (Replace with Google AdSense)</div>
 
     <!-- ── CONTACT ── -->
     <div class="container contact-card">
         <div><i class="fas fa-phone-alt" style="color:var(--primary);"></i><br><a href="tel:+919514391536">+91 95143 91536</a></div>
         <div><i class="fas fa-envelope" style="color:var(--primary);"></i><br><a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a></div>
-        <div><i class="fas fa-headset" style="color:var(--primary);"></i><br><span style="font-weight:700;">Free Lifetime Support</span></div>
+        <div><i class="fas fa-headset" style="color:var(--primary);"></i><br><span style="font-weight:700;" data-lang="support_label">Free Lifetime Support</span></div>
     </div>
 
     <!-- ── FINAL CTA ── -->
     <section class="cta-section" style="margin-top:80px;">
-        <h2>Ready to invoice freely?</h2>
-        <p style="opacity:0.9;">Join thousands of businesses that already use InvoiceFlow every day.</p>
-        <a href="invoice.html" class="btn"><i class="fas fa-arrow-right"></i> Launch Generator</a>
+        <h2 data-lang="cta_title">Ready to invoice freely?</h2>
+        <p style="opacity:0.9;" data-lang="cta_subtitle">Join thousands of businesses that already use InvoiceFlow every day.</p>
+        <a href="invoice.html" class="btn"><i class="fas fa-arrow-right"></i> <span data-lang="cta_button">Launch Generator</span></a>
     </section>
 
     <footer>
-        <p>© 2025 InvoiceFlow — Free Forever, for Everyone. 
+        <p>© 2025 InvoiceFlow — <span data-lang="footer_text">Free Forever, for Everyone.</span> 
         <a href="tel:+919514391536">+91 95143 91536</a> · 
         <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> · 
         <a href="privacy.html" style="color:var(--primary);">Privacy</a></p>
@@ -592,29 +656,169 @@
         hamburger.addEventListener('click', () => mobileNav.classList.toggle('show'));
         mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('show')));
 
-        // Load recent invoices from localStorage
-        function loadRecentInvoices() {
-            const invoices = JSON.parse(localStorage.getItem('invoices')||'[]');
-            const sorted = [...invoices].sort((a,b) => (b.timestamp||0) - (a.timestamp||0)).slice(0,5);
-            const container = document.getElementById('recentInvoicesContainer');
-            if(!sorted.length) return;
-            let html = '<table><thead><tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Status</th><th>Total</th></tr></thead><tbody>';
-            sorted.forEach(inv => {
-                const dateStr = inv.date ? new Date(inv.date).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) : '—';
-                const statusClass = inv.status ? inv.status.toLowerCase() : '';
-                html += `<tr>
-                    <td><strong>${inv.id||''}</strong></td>
-                    <td>${inv.customerName||'—'}</td>
-                    <td>${dateStr}</td>
-                    <td><span class="badge badge-${statusClass}">${inv.status||'Draft'}</span></td>
-                    <td><strong>${inv.grandTotal||'₹0'}</strong></td>
-                </tr>`;
-            });
-            html += '</tbody></table>';
-            container.innerHTML = html;
+        // ── DARK MODE ──
+        function applyDarkMode(enabled) {
+            if (enabled) {
+                document.body.classList.add('dark');
+                document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('invoiceflow_dark', 'true');
+            } else {
+                document.body.classList.remove('dark');
+                document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('invoiceflow_dark', 'false');
+            }
         }
-        window.addEventListener('DOMContentLoaded', loadRecentInvoices);
-        window.addEventListener('focus', loadRecentInvoices);
+
+        if (localStorage.getItem('invoiceflow_dark') === 'true') applyDarkMode(true);
+        else applyDarkMode(false);
+
+        document.getElementById('darkModeBtn').addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark');
+            applyDarkMode(!isDark);
+        });
+
+        // ── LANGUAGE TOGGLE ──
+        const translations = {
+            en: {
+                nav_home: "Home", nav_generator: "Generator", nav_api: "API & Contact", nav_terms: "Terms", nav_careers: "Careers", nav_advertise: "Advertise",
+                create_invoice: "Create Invoice",
+                hero_title: "Invoicing without<br><span>limits or fees</span>",
+                hero_subtitle: "Create professional, GST‑ready invoices instantly — no account needed. Built for every business, from local shops to international enterprises.",
+                start_now: "Start Now", our_mission: "Our Mission",
+                counter_label: "Invoices Created Worldwide",
+                mission_label: "Our Mission", mission_title: "Why we built InvoiceFlow", mission_subtitle: "We started with a simple question: why should anyone pay to create a bill?",
+                mission_card_title: "🌐 Free Invoicing Should Be a Basic Right",
+                mission_card_text: "We believe every entrepreneur — whether running a small tea stall or a multinational — deserves powerful, beautiful invoicing tools without paying a single rupee. InvoiceFlow is our commitment to a world where financial tools are accessible to all. Built in India, for the world.",
+                problem_label: "The Problem", problem_title: "Invoicing shouldn’t be expensive or complicated", problem_subtitle: "Existing software forces you to sign up, pay monthly fees, or deal with bloated features. We asked: what if invoicing was as simple as filling a form?",
+                old_way: "The old way", new_way: "The InvoiceFlow way",
+                features_label: "Why InvoiceFlow", features_title: "Everything you need, completely free", features_subtitle: "No hidden costs, no \"premium\" upgrades. Just a powerful invoice generator that works wherever you are.",
+                feature1_title: "Unlimited Invoices", feature1_text: "Generate as many invoices as you need, forever. No caps, no limits.",
+                feature2_title: "100% Private", feature2_text: "Your data never leaves your browser. We don’t see, collect, or store anything.",
+                feature3_title: "Auto Tax", feature3_text: "CGST, SGST, Cess calculated live as you type. Adaptable to any tax system.",
+                feature4_title: "Mobile First", feature4_text: "Create and send invoices from any device. Works perfectly on phones and tablets.",
+                feature5_title: "Print & Share", feature5_text: "One‑click print or share via WhatsApp, email, or link. Professional output always.",
+                feature6_title: "Auto‑Save", feature6_text: "Your shop details and invoices saved locally. Pick up right where you left off.",
+                audience_label: "Trusted by", audience_title: "From small shops to global teams", audience_subtitle: "No matter your size or location, InvoiceFlow fits seamlessly into your workflow.",
+                aud1_title: "Retailers & Kirana Stores", aud1_text: "Generate GST bills instantly at the counter without any accounting knowledge.",
+                aud2_title: "Freelancers & Consultants", aud2_text: "Send sleek, branded invoices to clients around the world in seconds.",
+                aud3_title: "Mid‑Sized Companies", aud3_text: "Empower multiple departments to invoice without installing software.",
+                aud4_title: "Enterprises", aud4_text: "Integrate with our free API to automate invoice creation at scale.",
+                how_label: "Get started in seconds", how_title: "How it works", how_subtitle: "You're three steps away from your first professional invoice.",
+                step1_title: "Fill Your Business Details", step1_text: "Once saved, they appear automatically every time you open the tool.",
+                step2_title: "Add Customer & Items", step2_text: "Enter bill‑to info and line items. Taxes are calculated live.",
+                step3_title: "Save, Print or Share", step3_text: "Your invoice is ready. Save locally, print directly, or send via WhatsApp.",
+                global_label: "Global Reach", global_title: "Built for the world", global_subtitle: "InvoiceFlow isn’t limited by borders. It adapts to your local tax rules, currency, and language.",
+                country1_title: "India GST", country1_text: "Built‑in CGST, SGST, Cess with editable rates.",
+                country2_title: "USA Sales Tax", country2_text: "Add state tax labels and rates as needed.",
+                country3_title: "European VAT", country3_text: "Set VAT rate, currency (€), and download VAT‑ready invoices.",
+                country4_title: "UAE & Others", country4_text: "Use any currency symbol and tax structure.",
+                commitment_label: "Our Commitment", commitment_title: "What makes InvoiceFlow different", commitment_subtitle: "We’re not just another free tool. We’re built on principles that put you first.",
+                diff1_title: "Zero Data Collection", diff1_text: "Unlike most SaaS platforms, we never see your invoices, customer data, or business details. Everything stays on your device.",
+                diff2_title: "Open & Transparent", diff2_text: "Our code is open source. Anyone can inspect, modify, or self‑host InvoiceFlow. No hidden backdoors.",
+                diff3_title: "Community First", diff3_text: "We listen to feedback and build features the community requests. No corporate roadmap – just what you actually need.",
+                diff4_title: "No Account, No Hassle", diff4_text: "You don’t need to create an account, verify an email, or remember a password. Just open and use.",
+                roadmap_label: "Future Plans", roadmap_title: "Where we’re headed", roadmap_subtitle: "InvoiceFlow is constantly evolving. Here’s what we’re working on next.",
+                plan1_title: "More Templates", plan1_text: "Professional invoice designs for different industries.",
+                plan2_title: "PWA Support", plan2_text: "Install InvoiceFlow as an app on your phone for offline use.",
+                plan3_title: "Multi‑Language", plan3_text: "Translate the interface into Hindi, Spanish, French, and more.",
+                plan4_title: "Basic Dashboard", plan4_text: "See your invoice history and totals at a glance (still private).",
+                why_free_title: "Why is it completely free?",
+                why_free_text: "We want to level the playing field. Small businesses shouldn't have to pay for basic tools. InvoiceFlow is supported by optional advertising and premium API plans — but the core invoice generator will remain free forever. No tricks.",
+                faq_label: "Quick answers", faq_title: "Frequently asked questions",
+                faq1_q: "Is there any hidden charge?", faq1_a: "No. You can generate unlimited invoices completely free. No forced upgrades.",
+                faq2_q: "Will my data be safe?", faq2_a: "Absolutely. Everything stays in your browser's local storage. We don't have access.",
+                faq3_q: "Can I use this for international billing?", faq3_a: "Yes! You can customise tax labels, currency symbol, and formats to match any country.",
+                support_label: "Free Lifetime Support",
+                cta_title: "Ready to invoice freely?",
+                cta_subtitle: "Join thousands of businesses that already use InvoiceFlow every day.",
+                cta_button: "Launch Generator",
+                footer_text: "Free Forever, for Everyone."
+            },
+            hi: {
+                nav_home: "होम", nav_generator: "जेनरेटर", nav_api: "API और संपर्क", nav_terms: "शर्तें", nav_careers: "करियर", nav_advertise: "विज्ञापन",
+                create_invoice: "चालान बनाएं",
+                hero_title: "सीमाओं या शुल्कों के<br><span>बिना इनवॉइसिंग</span>",
+                hero_subtitle: "पेशेवर, GST‑रेडी इनवॉइस तुरंत बनाएं — कोई खाता आवश्यक नहीं। हर व्यवसाय के लिए, छोटी दुकानों से लेकर वैश्विक उद्यमों तक।",
+                start_now: "अभी शुरू करें", our_mission: "हमारा मिशन",
+                counter_label: "दुनिया भर में बनाए गए इनवॉइस",
+                mission_label: "हमारा मिशन", mission_title: "हमने InvoiceFlow क्यों बनाया", mission_subtitle: "हमने एक सरल सवाल से शुरुआत की: बिल बनाने के लिए किसी को भुगतान क्यों करना चाहिए?",
+                mission_card_title: "🌐 मुफ्त इनवॉइसिंग एक बुनियादी अधिकार होना चाहिए",
+                mission_card_text: "हम मानते हैं कि हर उद्यमी — चाहे वह एक छोटी चाय की दुकान चला रहा हो या एक बहुराष्ट्रीय कंपनी — शक्तिशाली, सुंदर इनवॉइसिंग उपकरणों का हकदार है, बिना एक भी रुपया दिए। InvoiceFlow हमारी प्रतिबद्धता है एक ऐसी दुनिया के लिए जहां वित्तीय उपकरण सभी के लिए सुलभ हों। भारत में निर्मित, दुनिया के लिए।",
+                problem_label: "समस्या", problem_title: "इनवॉइसिंग महंगी या जटिल नहीं होनी चाहिए", problem_subtitle: "मौजूदा सॉफ्टवेयर आपको साइन अप करने, मासिक शुल्क देने, या भारी सुविधाओं से निपटने के लिए मजबूर करता है। हमने पूछा: अगर इनवॉइसिंग एक फॉर्म भरने जितना सरल हो तो?",
+                old_way: "पुराना तरीका", new_way: "InvoiceFlow का तरीका",
+                features_label: "क्यों InvoiceFlow", features_title: "आपको जो कुछ भी चाहिए, पूरी तरह मुफ्त", features_subtitle: "कोई छिपी हुई लागत नहीं, कोई \"प्रीमियम\" अपग्रेड नहीं। बस एक शक्तिशाली इनवॉइस जेनरेटर जो आप जहां भी हों, काम करता है।",
+                feature1_title: "असीमित इनवॉइस", feature1_text: "जितने चाहें उतने इनवॉइस बनाएं, हमेशा। कोई सीमा नहीं, कोई प्रतिबंध नहीं।",
+                feature2_title: "100% निजी", feature2_text: "आपका डेटा कभी आपके ब्राउज़र से बाहर नहीं जाता। हम कुछ भी नहीं देखते, इकट्ठा नहीं करते, या संग्रहीत नहीं करते।",
+                feature3_title: "ऑटो टैक्स", feature3_text: "CGST, SGST, Cess की गणना जैसे ही आप टाइप करते हैं, लाइव होती है। किसी भी कर प्रणाली के अनुकूल।",
+                feature4_title: "मोबाइल फर्स्ट", feature4_text: "किसी भी डिवाइस से इनवॉइस बनाएं और भेजें। फोन और टैबलेट पर पूरी तरह से काम करता है।",
+                feature5_title: "प्रिंट और शेयर", feature5_text: "एक क्लिक में प्रिंट करें या WhatsApp, ईमेल, या लिंक के माध्यम से साझा करें। हमेशा पेशेवर आउटपुट।",
+                feature6_title: "ऑटो‑सेव", feature6_text: "आपकी दुकान का विवरण और इनवॉइस स्थानीय रूप से सहेजे जाते हैं। जहां छोड़ा था वहीं से शुरू करें।",
+                audience_label: "भरोसेमंद", audience_title: "छोटी दुकानों से लेकर वैश्विक टीमों तक", audience_subtitle: "चाहे आपका आकार या स्थान कुछ भी हो, InvoiceFlow आपके वर्कफ़्लो में सहजता से फिट बैठता है।",
+                aud1_title: "खुदरा विक्रेता और किराना स्टोर", aud1_text: "काउंटर पर तुरंत GST बिल बनाएं, बिना किसी अकाउंटिंग ज्ञान के।",
+                aud2_title: "फ्रीलांसर और सलाहकार", aud2_text: "दुनिया भर के ग्राहकों को सेकंडों में स्लीक, ब्रांडेड इनवॉइस भेजें।",
+                aud3_title: "मध्यम आकार की कंपनियां", aud3_text: "कई विभागों को बिना सॉफ्टवेयर इंस्टॉल किए इनवॉइस करने के लिए सशक्त बनाएं।",
+                aud4_title: "उद्यम", aud4_text: "बड़े पैमाने पर इनवॉइस निर्माण को स्वचालित करने के लिए हमारी मुफ्त API के साथ एकीकृत करें।",
+                how_label: "सेकंडों में शुरू करें", how_title: "यह कैसे काम करता है", how_subtitle: "आप अपने पहले पेशेवर इनवॉइस से तीन कदम दूर हैं।",
+                step1_title: "अपना व्यवसाय विवरण भरें", step1_text: "एक बार सहेजने के बाद, जब भी आप टूल खोलते हैं, वे स्वचालित रूप से दिखाई देते हैं।",
+                step2_title: "ग्राहक और आइटम जोड़ें", step2_text: "बिल‑टू जानकारी और लाइन आइटम दर्ज करें। करों की गणना लाइव होती है।",
+                step3_title: "सहेजें, प्रिंट करें या साझा करें", step3_text: "आपका इनवॉइस तैयार है। स्थानीय रूप से सहेजें, सीधे प्रिंट करें, या WhatsApp के माध्यम से भेजें।",
+                global_label: "वैश्विक पहुंच", global_title: "दुनिया के लिए बनाया गया", global_subtitle: "InvoiceFlow सीमाओं तक सीमित नहीं है। यह आपके स्थानीय कर नियमों, मुद्रा और भाषा के अनुकूल हो जाता है।",
+                country1_title: "भारत GST", country1_text: "बिल्ट‑इन CGST, SGST, Cess संपादन योग्य दरों के साथ।",
+                country2_title: "USA सेल्स टैक्स", country2_text: "आवश्यकतानुसार राज्य कर लेबल और दरें जोड़ें।",
+                country3_title: "यूरोपीय VAT", country3_text: "VAT दर, मुद्रा (€) सेट करें और VAT‑रेडी इनवॉइस डाउनलोड करें।",
+                country4_title: "UAE और अन्य", country4_text: "किसी भी मुद्रा प्रतीक और कर संरचना का उपयोग करें।",
+                commitment_label: "हमारी प्रतिबद्धता", commitment_title: "InvoiceFlow को क्या अलग बनाता है", commitment_subtitle: "हम सिर्फ एक और मुफ्त टूल नहीं हैं। हम उन सिद्धांतों पर बने हैं जो आपको पहले रखते हैं।",
+                diff1_title: "शून्य डेटा संग्रह", diff1_text: "अधिकांश SaaS प्लेटफार्मों के विपरीत, हम आपके इनवॉइस, ग्राहक डेटा, या व्यावसायिक विवरण कभी नहीं देखते। सब कुछ आपके डिवाइस पर रहता है।",
+                diff2_title: "खुला और पारदर्शी", diff2_text: "हमारा कोड ओपन सोर्स है। कोई भी InvoiceFlow का निरीक्षण, संशोधन या स्व‑होस्ट कर सकता है। कोई छिपा हुआ पिछला दरवाजा नहीं।",
+                diff3_title: "समुदाय पहले", diff3_text: "हम प्रतिक्रिया सुनते हैं और वे सुविधाएँ बनाते हैं जो समुदाय अनुरोध करता है। कोई कॉर्पोरेट रोडमैप नहीं – बस वही जो आपको वास्तव में चाहिए।",
+                diff4_title: "कोई खाता नहीं, कोई झंझट नहीं", diff4_text: "आपको खाता बनाने, ईमेल सत्यापित करने, या पासवर्ड याद रखने की आवश्यकता नहीं है। बस खोलें और उपयोग करें।",
+                roadmap_label: "भविष्य की योजनाएं", roadmap_title: "हम कहाँ जा रहे हैं", roadmap_subtitle: "InvoiceFlow लगातार विकसित हो रहा है। यहाँ हम आगे क्या काम कर रहे हैं।",
+                plan1_title: "अधिक टेम्पलेट", plan1_text: "विभिन्न उद्योगों के लिए पेशेवर इनवॉइस डिज़ाइन।",
+                plan2_title: "PWA समर्थन", plan2_text: "ऑफ़लाइन उपयोग के लिए अपने फोन पर InvoiceFlow को ऐप के रूप में इंस्टॉल करें।",
+                plan3_title: "बहु‑भाषी", plan3_text: "इंटरफ़ेस का हिंदी, स्पेनिश, फ्रेंच, और अधिक में अनुवाद करें।",
+                plan4_title: "बुनियादी डैशबोर्ड", plan4_text: "अपने इनवॉइस इतिहास और योग को एक नज़र में देखें (अभी भी निजी)।",
+                why_free_title: "यह पूरी तरह से मुफ्त क्यों है?",
+                why_free_text: "हम खेल के मैदान को समतल करना चाहते हैं। छोटे व्यवसायों को बुनियादी उपकरणों के लिए भुगतान नहीं करना चाहिए। InvoiceFlow वैकल्पिक विज्ञापन और प्रीमियम API योजनाओं द्वारा समर्थित है — लेकिन मुख्य इनवॉइस जेनरेटर हमेशा मुफ्त रहेगा। कोई चाल नहीं।",
+                faq_label: "त्वरित उत्तर", faq_title: "अक्सर पूछे जाने वाले प्रश्न",
+                faq1_q: "क्या कोई छिपा हुआ शुल्क है?", faq1_a: "नहीं। आप असीमित इनवॉइस पूरी तरह से मुफ्त बना सकते हैं। कोई जबरन अपग्रेड नहीं।",
+                faq2_q: "क्या मेरा डेटा सुरक्षित रहेगा?", faq2_a: "बिल्कुल। सब कुछ आपके ब्राउज़र के स्थानीय भंडारण में रहता है। हमारे पास पहुंच नहीं है।",
+                faq3_q: "क्या मैं इसे अंतरराष्ट्रीय बिलिंग के लिए उपयोग कर सकता हूं?", faq3_a: "हां! आप कर लेबल, मुद्रा प्रतीक, और प्रारूपों को किसी भी देश से मिलाने के लिए अनुकूलित कर सकते हैं।",
+                support_label: "मुफ्त आजीवन सहायता",
+                cta_title: "मुफ्त में इनवॉइस करने के लिए तैयार हैं?",
+                cta_subtitle: "उन हजारों व्यवसायों में शामिल हों जो पहले से ही हर दिन InvoiceFlow का उपयोग करते हैं।",
+                cta_button: "जेनरेटर लॉन्च करें",
+                footer_text: "सभी के लिए हमेशा मुफ्त।"
+            }
+        };
+
+        let currentLang = localStorage.getItem('invoiceflow_lang') || 'en';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('invoiceflow_lang', lang);
+            const t = translations[lang] || translations.en;
+
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) {
+                    if (key === 'hero_title') {
+                        el.innerHTML = t[key]; // because it contains <br> and <span>
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
+            });
+
+            // Update static list items if needed (already handled by data-lang on parent, but list items are not individually translated – they remain as is for now)
+        }
+
+        document.getElementById('langBtn').addEventListener('click', () => {
+            const nextLang = currentLang === 'en' ? 'hi' : 'en';
+            applyLanguage(nextLang);
+        });
+
+        // Apply saved language on load
+        applyLanguage(currentLang);
     </script>
 </body>
 </html>

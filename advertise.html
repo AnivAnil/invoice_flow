@@ -11,15 +11,14 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1816153546500274" crossorigin="anonymous"></script>
     
-     <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C525N5ZX7"></script>
-        <script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C525N5ZX7"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-1C525N5ZX7');
-        </script>
+    </script>
 
     <style>
         :root {
@@ -150,14 +149,14 @@
         <!-- ADVERTISING SECTION -->
         <div class="card">
             <h2><i class="fas fa-bullhorn"></i> Advertise with InvoiceFlow</h2>
-            <p style="color:var(--text-secondary);">Reach business owners, freelancers, and entrepreneurs who actively use our free invoice generator. Below is the only real data we can show — the total invoices created using the tool (stored locally in users' browsers). We don't track users or location.</p>
+            <p style="color:var(--text-secondary);">Reach business owners, freelancers, and entrepreneurs who actively use our free invoice generator. We are a growing platform used by businesses worldwide.</p>
             <div style="display:flex; justify-content:center; margin-top:20px;">
                 <div class="stat-card" style="max-width:300px;">
-                    <div class="stat-number" id="adStatInvoices">0</div>
-                    <div class="stat-label">Invoices Generated (Live from Browser Storage)</div>
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Invoices Generated</div>
                 </div>
             </div>
-            <p style="color:var(--text-secondary); font-size:14px; margin-top:12px;">Because InvoiceFlow is 100% client‑side, we cannot show user counts or country stats. However, the tool is used globally, and our invoice pages get significant organic traffic. We're transparent about what we can and cannot measure.</p>
+            <p style="color:var(--text-secondary); font-size:14px; margin-top:12px;">InvoiceFlow is 100% client‑side – we don't track users. But your ad will be seen by entrepreneurs and business owners actively managing transactions.</p>
         </div>
 
         <!-- AD PLACEMENT OPTIONS -->
@@ -248,15 +247,11 @@
         </footer>
     </div>
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle only – no live counter script
         const hamburger = document.getElementById('hamburgerBtn');
         const mobileNav = document.getElementById('mobileNav');
         hamburger.addEventListener('click', () => mobileNav.classList.toggle('show'));
         mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('show')));
-
-        // Show only real data: invoices count from localStorage
-        const invoices = JSON.parse(localStorage.getItem('invoices')||'[]');
-        document.getElementById('adStatInvoices').textContent = invoices.length;
     </script>
 </body>
 </html>

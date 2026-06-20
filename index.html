@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvoiceFlow – Free Invoice Generator for Everyone</title>
+    <meta name="description" content="Create unlimited professional invoices for free. No sign‑up. GST & VAT ready. For small shops to global enterprises.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --border: #e2e8f0;
+            --radius: 24px;
+            --shadow: 0 8px 30px rgba(0,0,0,0.04);
+            --transition: 0.25s ease;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 1200px; margin:0 auto; padding:0 30px; }
+        header {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top:0;
+            z-index:100;
+            padding: 16px 0;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .logo i { font-size: 26px; }
+        .desktop-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .desktop-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 10px 18px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .desktop-nav a:hover,
+        .desktop-nav a.active { background: #f0f4ff; color: var(--primary); }
+        .desktop-nav a.active { background: var(--primary); color: white; }
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: white;
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            position: absolute;
+            top: 85px;
+            right: 30px;
+            width: 220px;
+            z-index: 200;
+        }
+        .mobile-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .mobile-nav a:hover { background: #f0f4ff; color: var(--primary); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 18px rgba(37,99,235,0.2);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(37,99,235,0.3); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover { background: #f0f4ff; }
+
+        /* Sections */
+        .section { margin: 100px 0; }
+        .hero {
+            text-align: center;
+            padding: 100px 0 80px;
+            background: radial-gradient(circle at 50% 0%, #f0f4ff 0%, transparent 60%);
+        }
+        .hero h1 {
+            font-size: clamp(42px, 8vw, 64px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+        .hero h1 span { color: var(--primary); }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        .section-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: block;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 38px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 60px;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .mission-card {
+            background: #f8faff;
+            border-radius: 40px;
+            padding: 60px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .mission-card h2 { font-size: 32px; font-weight: 900; margin-bottom: 16px; position: relative; }
+        .mission-card p { font-size: 18px; color: var(--text-secondary); max-width: 700px; margin: 0 auto; position: relative; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 32px 28px;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            border-color: #e2e8f0;
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #f0f4ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .feature-card h4 { font-weight: 800; margin-bottom: 10px; font-size: 18px; }
+        .feature-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; }
+        .audience-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 30px 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .audience-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+        .audience-card i { font-size: 32px; color: var(--primary); margin-bottom: 14px; }
+
+        .how-row {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .how-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 36px 24px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
+        }
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            margin: 0 auto 18px;
+        }
+
+        .why-free {
+            background: #0f172a;
+            color: white;
+            border-radius: 40px;
+            padding: 60px 50px;
+            text-align: center;
+        }
+        .why-free h2 { font-size: 32px; font-weight: 900; margin-bottom: 16px; }
+        .why-free p { font-size: 18px; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+        .recent-section { background: #f8fafc; border-radius: 40px; padding: 60px 50px; }
+        .recent-section table { width: 100%; border-collapse: collapse; }
+        .recent-section th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .recent-section td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+        .badge { padding: 5px 12px; border-radius: 30px; font-size: 12px; font-weight: 700; }
+        .badge-paid { background: #dcfce7; color: #166534; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+        .faq-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 24px;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 30px;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.02);
+        }
+        .contact-card a { text-decoration: none; color: var(--primary); font-weight: 700; font-size: 18px; }
+
+        .cta-section {
+            background: var(--primary);
+            border-radius: 40px;
+            padding: 80px 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+        .cta-section h2 { font-size: 36px; font-weight: 900; margin-bottom: 16px; }
+        .cta-section .btn { background: white; color: var(--primary); }
+
+        footer { text-align: center; padding: 30px 0; color: var(--text-secondary); font-size: 14px; }
+
+        .ad-banner {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            text-align: center;
+            padding: 24px;
+            margin: 40px 0;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .hamburger { display: block; }
+            .mobile-nav.show { display: flex; }
+            .section { margin: 60px 0; }
+            .mission-card, .recent-section, .why-free { padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ── HEADER ── -->
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
+            <nav class="desktop-nav">
+                <a href="index.html" class="active">Home</a>
+                <a href="invoice.html">Generator</a>
+                <a href="api-contact.html">API & Contact</a>
+                <a href="terms.html">Terms</a>
+                <a href="career.html">Careers</a>
+                <a href="advertise.html">Advertise</a>
+            </nav>
+            <a href="invoice.html" class="btn btn-primary desktop-nav"><i class="fas fa-plus"></i> Create Invoice</a>
+            <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html">Home</a>
+            <a href="invoice.html">Generator</a>
+            <a href="api-contact.html">API</a>
+            <a href="terms.html">Terms</a>
+            <a href="career.html">Careers</a>
+            <a href="advertise.html">Advertise</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="invoice.html" class="btn btn-primary" style="margin-top:8px;">Create Invoice</a>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <div class="container">
+            <h1>Invoicing without<br><span>limits or fees</span></h1>
+            <p>Create professional, GST‑ready invoices instantly — no account needed. Built for every business, from local shops to international enterprises.</p>
+            <div class="hero-buttons">
+                <a href="invoice.html" class="btn btn-primary"><i class="fas fa-bolt"></i> Start Now</a>
+                <a href="#mission" class="btn btn-outline">Our Mission</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── MISSION ── -->
+    <section id="mission" class="section">
+        <div class="container">
+            <div class="mission-card">
+                <h2>🌐 Free Invoicing Should Be a Basic Right</h2>
+                <p>We believe every entrepreneur — whether running a small tea stall or a multinational — deserves powerful, beautiful invoicing tools without paying a single rupee. InvoiceFlow is our commitment to a world where financial tools are accessible to all.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label">Why InvoiceFlow</span>
+            <h2 class="section-title">Everything you need, completely free</h2>
+            <p class="section-subtitle">No hidden costs, no "premium" upgrades. Just a powerful invoice generator that works wherever you are.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                    <h4>Unlimited Invoices</h4>
+                    <p>Generate as many invoices as you need, forever. No caps, no limits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>100% Private</h4>
+                    <p>Your data never leaves your browser. We don’t see, collect, or store anything.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h4>Auto Tax</h4>
+                    <p>CGST, SGST, Cess calculated live as you type. Adaptable to any tax system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Mobile First</h4>
+                    <p>Create and send invoices from any device. Works perfectly on phones and tablets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-print"></i></div>
+                    <h4>Print & Share</h4>
+                    <p>One‑click print or share via WhatsApp, email, or link. Professional output always.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-save"></i></div>
+                    <h4>Auto‑Save</h4>
+                    <p>Your shop details and invoices saved locally. Pick up right where you left off.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WHO USES IT ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label">Trusted by</span>
+            <h2 class="section-title">From small shops to global teams</h2>
+            <p class="section-subtitle">No matter your size or location, InvoiceFlow fits seamlessly into your workflow.</p>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <i class="fas fa-store"></i>
+                    <h4>Retailers & Kirana Stores</h4>
+                    <p>Generate GST bills instantly at the counter without any accounting knowledge.</p>
+                </div>
+                <div class="audience-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h4>Freelancers & Consultants</h4>
+                    <p>Send sleek, branded invoices to clients around the world in seconds.</p>
+                </div>
+                <div class="audience-card">
+                    <i class="fas fa-building"></i>
+                    <h4>Mid‑Sized Companies</h4>
+                    <p>Empower multiple departments to invoice without installing software.</p>
+                </div>
+                <div class="audience-card">
+                    <i class="fas fa-globe"></i>
+                    <h4>Enterprises</h4>
+                    <p>Integrate with our free API to automate invoice creation at scale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── HOW IT WORKS ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label">Get started in seconds</span>
+            <h2 class="section-title">How it works</h2>
+            <p class="section-subtitle">You're three steps away from your first professional invoice.</p>
+            <div class="how-row">
+                <div class="how-step">
+                    <div class="step-circle">1</div>
+                    <h4>Fill Your Business Details</h4>
+                    <p>Once saved, they appear automatically every time you open the tool.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-circle">2</div>
+                    <h4>Add Customer & Items</h4>
+                    <p>Enter bill‑to info and line items. Taxes are calculated live.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-circle">3</div>
+                    <h4>Save, Print or Share</h4>
+                    <p>Your invoice is ready. Save locally, print directly, or send via WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WHY FREE ── -->
+    <section class="section">
+        <div class="container">
+            <div class="why-free">
+                <h2>Why is it completely free?</h2>
+                <p>We want to level the playing field. Small businesses shouldn't have to pay for basic tools. InvoiceFlow is supported by optional advertising and premium API plans — but the core invoice generator will remain free forever. No tricks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── RECENT INVOICES ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label">Latest activity</span>
+            <h2 class="section-title">Recently created invoices</h2>
+            <div class="recent-section" id="recentInvoicesContainer">
+                <p style="text-align:center; color:var(--text-secondary);">No invoices yet. <a href="invoice.html" style="color:var(--primary);">Create your first one →</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="section">
+        <div class="container">
+            <span class="section-label">Quick answers</span>
+            <h2 class="section-title">Frequently asked questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card"><h4>Is there any hidden charge?</h4><p>No. You can generate unlimited invoices completely free. No forced upgrades.</p></div>
+                <div class="faq-card"><h4>Will my data be safe?</h4><p>Absolutely. Everything stays in your browser's local storage. We don't have access.</p></div>
+                <div class="faq-card"><h4>Can I use this for international billing?</h4><p>Yes! You can customise tax labels, currency symbol, and formats to match any country.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── AD BANNER ── -->
+    <div class="container ad-banner">📢 Your Ad Here – 728x90 (Replace with Google AdSense)</div>
+
+    <!-- ── CONTACT ── -->
+    <div class="container contact-card">
+        <div><i class="fas fa-phone-alt" style="color:var(--primary);"></i><br><a href="tel:+919514391536">+91 95143 91536</a></div>
+        <div><i class="fas fa-envelope" style="color:var(--primary);"></i><br><a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a></div>
+        <div><i class="fas fa-headset" style="color:var(--primary);"></i><br><span style="font-weight:700;">Free Lifetime Support</span></div>
+    </div>
+
+    <!-- ── FINAL CTA ── -->
+    <section class="cta-section" style="margin-top:80px;">
+        <h2>Ready to invoice freely?</h2>
+        <p style="opacity:0.9;">Join thousands of businesses that already use InvoiceFlow every day.</p>
+        <a href="invoice.html" class="btn"><i class="fas fa-arrow-right"></i> Launch Generator</a>
+    </section>
+
+    <footer>
+        <p>© 2025 InvoiceFlow — Free Forever, for Everyone. 
+        <a href="tel:+919514391536">+91 95143 91536</a> · 
+        <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> · 
+        <a href="privacy.html" style="color:var(--primary);">Privacy</a></p>
+    </footer>
+
+    <!-- ── SCRIPTS ── -->
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => mobileNav.classList.toggle('show'));
+        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('show')));
+
+        // Load recent invoices from localStorage
+        function loadRecentInvoices() {
+            const invoices = JSON.parse(localStorage.getItem('invoices')||'[]');
+            const sorted = [...invoices].sort((a,b) => (b.timestamp||0) - (a.timestamp||0)).slice(0,5);
+            const container = document.getElementById('recentInvoicesContainer');
+            if(!sorted.length) return;
+            let html = '<table><thead><tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Status</th><th>Total</th></tr></thead><tbody>';
+            sorted.forEach(inv => {
+                const dateStr = inv.date ? new Date(inv.date).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) : '—';
+                const statusClass = inv.status ? inv.status.toLowerCase() : '';
+                html += `<tr>
+                    <td><strong>${inv.id||''}</strong></td>
+                    <td>${inv.customerName||'—'}</td>
+                    <td>${dateStr}</td>
+                    <td><span class="badge badge-${statusClass}">${inv.status||'Draft'}</span></td>
+                    <td><strong>${inv.grandTotal||'₹0'}</strong></td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        window.addEventListener('DOMContentLoaded', loadRecentInvoices);
+        window.addEventListener('focus', loadRecentInvoices);
+    </script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Unlimited Invoices – InvoiceFlow (Global)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --border: #e2e8f0;
+            --radius: 20px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 40px rgba(0,0,0,0.08);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            background-image: radial-gradient(circle at 20% 10%, #e0e7ff 0%, transparent 50%);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        .top-bar {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 8px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 24px;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 22px; color: var(--primary); }
+        .logo i { font-size: 26px; }
+        nav { display: flex; gap: 8px; flex-wrap: wrap; }
+        nav a { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--text-secondary); padding: 8px 18px; border-radius: 30px; transition: 0.2s; }
+        nav a:hover, nav a.active { background: #eff6ff; color: var(--primary); }
+        nav a.active { background: var(--primary); color: white; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 24px; font-weight: 700; font-size: 14px; border-radius: 40px; border: none; cursor: pointer; transition: 0.3s; white-space: nowrap; text-decoration: none; font-family: inherit; }
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; }
+        .btn-outline { background: white; border: 2px solid #cbd5e1; color: var(--primary); }
+        .btn-outline:hover { background: #f8fafc; border-color: var(--primary); }
+        .main-layout { display: flex; gap: 24px; max-width: 1100px; width: 100%; flex-wrap: wrap; justify-content: center; }
+        .invoice-card { flex: 1; min-width: 320px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 28px; padding: 32px 28px; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.8); }
+        .ad-sidebar { width: 300px; background: #f8fafc; border-radius: 28px; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 400px; position: sticky; top: 100px; align-self: flex-start; color: #64748b; font-weight: 700; text-align: center; border: 2px dashed #cbd5e1; }
+        @media (max-width: 900px) { .ad-sidebar { display: none; } }
+        .shop-header { display: flex; gap: 20px; align-items: center; margin-bottom: 28px; border-bottom: 2px dashed #e2e8f0; padding-bottom: 24px; flex-wrap: wrap; }
+        .logo-box { width: 80px; height: 80px; background: #eff6ff; border: 2px dashed #93c5fd; border-radius: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+        .shop-fields { flex: 1; min-width: 200px; }
+        .shop-fields input { border: none; outline: none; background: transparent; font-size: 15px; width: 100%; margin-bottom: 6px; color: var(--text-secondary); padding: 4px 0; border-bottom: 1px solid transparent; }
+        .shop-fields input:focus { border-bottom-color: var(--primary); color: var(--text); }
+        .shop-fields input.shop-name { font-size: 28px; font-weight: 800; color: var(--text); }
+        .meta-row { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+        .meta-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 14px 18px; flex: 1; min-width: 120px; }
+        .meta-card label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; display: block; margin-bottom: 6px; }
+        .meta-card input, .meta-card select { font-size: 16px; font-weight: 600; background: transparent; border: none; outline: none; width: 100%; color: var(--text); }
+        .customer-section { background: #f8fafc; border-radius: 18px; padding: 22px; margin-bottom: 28px; }
+        .customer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media (max-width: 500px) { .customer-grid { grid-template-columns: 1fr; } }
+        .customer-grid input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 14px; font-size: 15px; background: white; outline: none; }
+        .customer-grid input:focus { border-color: var(--primary); }
+        .tax-box { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 18px; padding: 22px; margin-bottom: 28px; }
+        .tax-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
+        .tax-row > div { flex: 1; min-width: 90px; }
+        .tax-row label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #047857; display: block; margin-bottom: 6px; }
+        .tax-row input { width: 100%; padding: 10px 14px; border: 1.5px solid #a7f3d0; border-radius: 14px; font-size: 15px; background: white; outline: none; }
+        .table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 12px; background: white; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #f8fafc; padding: 14px 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748b; text-align: left; border-bottom: 2px solid var(--border); }
+        td { padding: 10px 16px; border-bottom: 1px solid #f1f5f9; }
+        td input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; outline: none; background: #fafafa; font-size: 14px; }
+        td input:focus { border-color: var(--primary); background: white; }
+        .item-amount { font-weight: 700; text-align: right; padding: 10px 16px; }
+        .notes-section { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+        @media (max-width: 600px) { .notes-section { grid-template-columns: 1fr; } }
+        .notes-section textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 14px; font-size: 14px; font-family: inherit; resize: vertical; min-height: 80px; outline: none; background: white; }
+        .summary { background: #f8fafc; border-radius: 18px; padding: 24px; margin-top: 24px; display: flex; justify-content: flex-end; }
+        .summary-block { width: 320px; }
+        .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 15px; color: var(--text-secondary); }
+        .summary-row.total { font-size: 30px; font-weight: 900; color: var(--primary); border-top: 2px solid #cbd5e1; padding-top: 14px; margin-top: 10px; }
+        .action-bar { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+        .contact-info { text-align: center; margin-top: 20px; font-size: 14px; color: #64748b; border-top: 1px solid var(--border); padding-top: 16px; }
+        .contact-info a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        footer { text-align: center; padding: 24px 0; color: var(--text-secondary); font-size: 14px; width: 100%; max-width: 1100px; }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .toast { position: fixed; bottom: 24px; right: 24px; background: #0f172a; color: white; padding: 14px 24px; border-radius: 30px; font-weight: 600; animation: slideIn 0.3s ease-out; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        @keyframes slideIn { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+        .settings-btn { background: transparent; border: 1px solid var(--border); padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+        .settings-btn:hover { background: #f1f5f9; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 300; justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 28px; padding: 30px; width: 90%; max-width: 500px; box-shadow: var(--shadow-lg); }
+        .modal-content h3 { margin-bottom: 20px; }
+        .modal-content .form-group { margin-bottom: 14px; }
+        .modal-content label { font-weight: 600; display: block; margin-bottom: 4px; }
+        .modal-content input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <!-- ── TOP NAVIGATION ── -->
+    <div class="top-bar">
+        <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="invoice.html" class="active">Generator</a>
+            <a href="api-contact.html">API & Contact</a>
+            <a href="terms.html">Terms</a>
+            <a href="career.html">Careers</a>
+            <a href="advertise.html">Advertise</a>
+        </nav>
+        <button class="settings-btn" id="openSettingsBtn"><i class="fas fa-globe"></i> Global Settings</button>
+    </div>
+
+    <!-- ── GLOBAL SETTINGS MODAL ── -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-cog"></i> Global Invoice Settings</h3>
+            <div class="form-group"><label>Currency Symbol</label><input type="text" id="currencySymbol" placeholder="₹" maxlength="3"></div>
+            <div class="form-group"><label>Tax 1 Name</label><input type="text" id="tax1Name" placeholder="e.g., CGST"></div>
+            <div class="form-group"><label>Tax 1 Default Rate (%)</label><input type="number" id="tax1Rate" step="any" value="2.5"></div>
+            <div class="form-group"><label>Tax 2 Name</label><input type="text" id="tax2Name" placeholder="e.g., SGST"></div>
+            <div class="form-group"><label>Tax 2 Default Rate (%)</label><input type="number" id="tax2Rate" step="any" value="2.5"></div>
+            <div class="form-group"><label>Tax 3 Name (optional)</label><input type="text" id="tax3Name" placeholder="e.g., Cess"></div>
+            <div class="form-group"><label>Tax 3 Default Rate (%)</label><input type="number" id="tax3Rate" step="any" value="0"></div>
+            <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:20px;">
+                <button class="btn btn-outline" onclick="closeSettingsModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveGlobalSettings()"><i class="fas fa-save"></i> Save & Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="main-layout">
+        <div class="ad-sidebar">📢 Sidebar Ad<br>300x600</div>
+        <div class="invoice-card" id="printableInvoice">
+            <!-- Shop Header -->
+            <div class="shop-header">
+                <div class="logo-box" onclick="document.getElementById('logoInput').click()">
+                    <div id="logoPlaceholder"><i class="fas fa-camera" style="font-size:26px; color:#93c5fd;"></i></div>
+                    <img id="logoImg" alt="Logo" style="width:100%;height:100%;object-fit:cover;display:none;">
+                </div>
+                <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="loadLogo(event)">
+                <div class="shop-fields">
+                    <input class="shop-name" id="shopName" placeholder="YOUR STORE NAME">
+                    <input id="shopAddress" placeholder="Address, City, Country">
+                    <input id="shopContact" placeholder="Phone | Tax ID (VAT/GSTIN)">
+                </div>
+            </div>
+
+            <!-- Meta Information -->
+            <div class="meta-row">
+                <div class="meta-card"><label>Invoice #</label><input id="invoiceId" readonly></div>
+                <div class="meta-card"><label>Date</label><input type="date" id="invoiceDate"></div>
+                <div class="meta-card"><label>Status</label><select id="invoiceStatus"><option>Paid</option><option>Draft</option><option>Pending</option></select></div>
+            </div>
+
+            <!-- Customer Details -->
+            <div class="customer-section">
+                <h4><i class="fas fa-user-circle"></i> Bill To</h4>
+                <div class="customer-grid">
+                    <input id="customerName" placeholder="Customer/Company Name">
+                    <input id="customerPhone" placeholder="Phone">
+                    <input id="customerEmail" placeholder="Email">
+                    <input id="customerAddress" placeholder="Billing Address">
+                </div>
+            </div>
+
+            <!-- Tax Settings (Dynamic) -->
+            <div class="tax-box" id="taxBox">
+                <h4><i class="fas fa-percent"></i> <span id="taxTitleText">Tax Settings</span></h4>
+                <div class="tax-row" id="taxRow">
+                    <div id="tax1Group"><label id="tax1Label">CGST%</label><input id="tax1Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax2Group"><label id="tax2Label">SGST%</label><input id="tax2Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax3Group" style="display:none;"><label id="tax3Label">Cess%</label><input id="tax3Input" type="number" step="any" value="0" oninput="calcTotal()"></div>
+                    <button class="btn btn-outline" onclick="calcTotal()"><i class="fas fa-sync-alt"></i> Recalc</button>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item / Service</th>
+                            <th>Qty</th>
+                            <th>Rate (<span id="currencyTableSymbol">₹</span>)</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody"></tbody>
+                </table>
+            </div>
+            <button class="btn btn-outline add-item-btn" id="addItemBtn"><i class="fas fa-plus-circle"></i> Add Item</button>
+
+            <!-- Notes & Bank Details -->
+            <div class="notes-section">
+                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-sticky-note"></i> Notes</label><textarea id="invoiceNotes" rows="2" placeholder="Payment terms, thank you note..."></textarea></div>
+                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-university"></i> Bank Details</label><textarea id="bankDetails" rows="2" placeholder="Bank name, account number, IFSC..."></textarea></div>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary">
+                <div class="summary-block">
+                    <div class="summary-row"><span>Subtotal</span><span><span id="currencySubtotal">₹</span><span id="subtotal">0.00</span></span></div>
+                    <div class="summary-row" id="tax1SummaryRow"><span id="tax1SummaryLabel">CGST (<span id="tax1RateDisp">2.5</span>%)</span><span><span id="currencyTax1">₹</span><span id="tax1Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax2SummaryRow"><span id="tax2SummaryLabel">SGST (<span id="tax2RateDisp">2.5</span>%)</span><span><span id="currencyTax2">₹</span><span id="tax2Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax3SummaryRow" style="display:none;"><span id="tax3SummaryLabel">Cess (<span id="tax3RateDisp">0</span>%)</span><span><span id="currencyTax3">₹</span><span id="tax3Val">0.00</span></span></div>
+                    <div class="summary-row total"><span>Grand Total</span><span><span id="currencyGrand">₹</span><span id="grandTotal">0.00</span></span></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-bar">
+                <button class="btn btn-primary" id="saveLocalBtn"><i class="fas fa-save"></i> Save Invoice</button>
+                <button class="btn btn-outline" id="shareBtn"><i class="fas fa-share-alt"></i> Share</button>
+                <button class="btn btn-outline" id="printBtn"><i class="fas fa-print"></i> Print</button>
+            </div>
+
+            <div class="contact-info">
+                <i class="fas fa-headset"></i> Need help? <a href="tel:+919514391536">+91 95143 91536</a> &nbsp;|&nbsp; <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 InvoiceFlow — Free Forever, for Everyone. 
+        <a href="tel:+919514391536">+91 95143 91536</a> · 
+        <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> · 
+        <a href="privacy.html">Privacy</a></p>
+    </footer>
+
+    <div id="toastContainer"></div>
+
+    <script>
+        // ── GLOBAL SETTINGS ──
+        const DEFAULT_SETTINGS = {
+            currency: '₹',
+            tax1: { name: 'CGST', rate: 2.5 },
+            tax2: { name: 'SGST', rate: 2.5 },
+            tax3: { name: 'Cess', rate: 0 }
+        };
+        function getGlobalSettings() {
+            return JSON.parse(localStorage.getItem('invoice_global_settings')) || DEFAULT_SETTINGS;
+        }
+        function saveGlobalSettingsToStorage(settings) {
+            localStorage.setItem('invoice_global_settings', JSON.stringify(settings));
+        }
+        function applyGlobalSettings(settings) {
+            document.querySelectorAll('[id^="currency"], #currencyTableSymbol').forEach(el => el.textContent = settings.currency);
+            document.getElementById('currencyTableSymbol').textContent = settings.currency;
+            document.getElementById('tax1Label').textContent = settings.tax1.name + '%';
+            document.getElementById('tax2Label').textContent = settings.tax2.name + '%';
+            document.getElementById('tax1Input').value = settings.tax1.rate;
+            document.getElementById('tax2Input').value = settings.tax2.rate;
+            const tax3Group = document.getElementById('tax3Group');
+            if (settings.tax3.name && settings.tax3.name.trim() !== '') {
+                tax3Group.style.display = 'block';
+                document.getElementById('tax3Label').textContent = settings.tax3.name + '%';
+                document.getElementById('tax3Input').value = settings.tax3.rate;
+            } else {
+                tax3Group.style.display = 'none';
+            }
+            document.getElementById('tax1SummaryLabel').innerHTML = settings.tax1.name + ' (<span id="tax1RateDisp">' + settings.tax1.rate + '</span>%)';
+            document.getElementById('tax2SummaryLabel').innerHTML = settings.tax2.name + ' (<span id="tax2RateDisp">' + settings.tax2.rate + '</span>%)';
+            if (settings.tax3.name && settings.tax3.name.trim() !== '') {
+                document.getElementById('tax3SummaryRow').style.display = 'flex';
+                document.getElementById('tax3SummaryLabel').innerHTML = settings.tax3.name + ' (<span id="tax3RateDisp">' + settings.tax3.rate + '</span>%)';
+            } else {
+                document.getElementById('tax3SummaryRow').style.display = 'none';
+            }
+            calcTotal();
+        }
+        function openSettingsModal() {
+            const settings = getGlobalSettings();
+            document.getElementById('currencySymbol').value = settings.currency;
+            document.getElementById('tax1Name').value = settings.tax1.name;
+            document.getElementById('tax1Rate').value = settings.tax1.rate;
+            document.getElementById('tax2Name').value = settings.tax2.name;
+            document.getElementById('tax2Rate').value = settings.tax2.rate;
+            document.getElementById('tax3Name').value = settings.tax3.name;
+            document.getElementById('tax3Rate').value = settings.tax3.rate;
+            document.getElementById('settingsModal').classList.add('active');
+        }
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+        function saveGlobalSettings() {
+            const settings = {
+                currency: document.getElementById('currencySymbol').value || DEFAULT_SETTINGS.currency,
+                tax1: { name: document.getElementById('tax1Name').value || DEFAULT_SETTINGS.tax1.name, rate: parseFloat(document.getElementById('tax1Rate').value) || 0 },
+                tax2: { name: document.getElementById('tax2Name').value || DEFAULT_SETTINGS.tax2.name, rate: parseFloat(document.getElementById('tax2Rate').value) || 0 },
+                tax3: { name: document.getElementById('tax3Name').value || '', rate: parseFloat(document.getElementById('tax3Rate').value) || 0 }
+            };
+            saveGlobalSettingsToStorage(settings);
+            applyGlobalSettings(settings);
+            closeSettingsModal();
+            showToast('✅ Global settings updated!');
+        }
+        function applyUrlParameterOverrides() {
+            const params = new URLSearchParams(window.location.search);
+            const settings = getGlobalSettings();
+            let changed = false;
+            if (params.has('currency')) { settings.currency = params.get('currency'); changed = true; }
+            if (params.has('tax1name')) { settings.tax1.name = params.get('tax1name'); changed = true; }
+            if (params.has('tax1rate')) { settings.tax1.rate = parseFloat(params.get('tax1rate')) || 0; changed = true; }
+            if (params.has('tax2name')) { settings.tax2.name = params.get('tax2name'); changed = true; }
+            if (params.has('tax2rate')) { settings.tax2.rate = parseFloat(params.get('tax2rate')) || 0; changed = true; }
+            if (params.has('tax3name')) { settings.tax3.name = params.get('tax3name'); changed = true; }
+            if (params.has('tax3rate')) { settings.tax3.rate = parseFloat(params.get('tax3rate')) || 0; changed = true; }
+            if (changed) applyGlobalSettings(settings);
+            if (params.get('name')) document.getElementById('customerName').value = params.get('name');
+            if (params.get('phone')) document.getElementById('customerPhone').value = params.get('phone');
+            if (params.get('email')) document.getElementById('customerEmail').value = params.get('email');
+            if (params.get('address')) document.getElementById('customerAddress').value = params.get('address');
+            if (params.get('notes')) document.getElementById('invoiceNotes').value = params.get('notes');
+        }
+
+        // ── INIT ──
+        const d = new Date();
+        document.getElementById('invoiceId').value = `INV-${d.getFullYear()}${(d.getMonth()+1).toString().padStart(2,'0')}${d.getDate().toString().padStart(2,'0')}-${Math.floor(Math.random()*10000)}`;
+        document.getElementById('invoiceDate').valueAsDate = d;
+        const savedShop = JSON.parse(localStorage.getItem('invoice_shop') || '{}');
+        if(savedShop.name) {
+            document.getElementById('shopName').value = savedShop.name;
+            document.getElementById('shopAddress').value = savedShop.address || '';
+            document.getElementById('shopContact').value = savedShop.contact || '';
+            document.getElementById('bankDetails').value = savedShop.bank || '';
+            if(savedShop.logo) {
+                document.getElementById('logoImg').src = savedShop.logo;
+                document.getElementById('logoImg').style.display='block';
+                document.getElementById('logoPlaceholder').style.display='none';
+            }
+        }
+        applyUrlParameterOverrides();
+
+        // ── ITEMS ──
+        function addRow() {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="text" placeholder="Description" class="desc"></td><td><input type="number" value="1" class="qty" oninput="calcTotal()"></td><td><input type="number" value="0" class="rate" oninput="calcTotal()"></td><td class="item-amount">0.00</td><td><button class="btn-outline" style="padding:4px 10px; font-size:12px;" onclick="this.closest('tr').remove();calcTotal();">✕</button></td>`;
+            document.getElementById('itemsBody').appendChild(tr);
+        }
+        function calcTotal() {
+            let subtotal = 0;
+            document.querySelectorAll('#itemsBody tr').forEach(row => {
+                const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
+                const rate = parseFloat(row.querySelector('.rate')?.value) || 0;
+                const amt = qty * rate;
+                row.querySelector('.item-amount').textContent = amt.toFixed(2);
+                subtotal += amt;
+            });
+            const settings = getGlobalSettings();
+            const tax1Rate = parseFloat(document.getElementById('tax1Input').value) || settings.tax1.rate;
+            const tax2Rate = parseFloat(document.getElementById('tax2Input').value) || settings.tax2.rate;
+            const tax3Rate = parseFloat(document.getElementById('tax3Input').value) || settings.tax3.rate;
+            const tax1Val = subtotal * tax1Rate / 100;
+            const tax2Val = subtotal * tax2Rate / 100;
+            const tax3Val = subtotal * tax3Rate / 100;
+            const grand = subtotal + tax1Val + tax2Val + tax3Val;
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('tax1Val').textContent = tax1Val.toFixed(2);
+            document.getElementById('tax2Val').textContent = tax2Val.toFixed(2);
+            document.getElementById('tax3Val').textContent = tax3Val.toFixed(2);
+            document.getElementById('tax1RateDisp').textContent = tax1Rate;
+            document.getElementById('tax2RateDisp').textContent = tax2Rate;
+            document.getElementById('tax3RateDisp').textContent = tax3Rate;
+            document.getElementById('tax3SummaryRow').style.display = (settings.tax3.name && settings.tax3.name.trim() !== '') ? 'flex' : 'none';
+            document.getElementById('grandTotal').textContent = grand.toFixed(2);
+        }
+        function collectInvoice() {
+            const items = [];
+            document.querySelectorAll('#itemsBody tr').forEach(row => {
+                const desc = row.querySelector('.desc')?.value.trim();
+                if(!desc) return;
+                const qty = parseFloat(row.querySelector('.qty')?.value)||0;
+                const rate = parseFloat(row.querySelector('.rate')?.value)||0;
+                items.push({ desc, qty, rate, amount: (qty*rate).toFixed(2) });
+            });
+            return {
+                id: document.getElementById('invoiceId').value,
+                date: document.getElementById('invoiceDate').value,
+                status: document.getElementById('invoiceStatus').value,
+                shopName: document.getElementById('shopName').value,
+                shopAddress: document.getElementById('shopAddress').value,
+                shopContact: document.getElementById('shopContact').value,
+                customerName: document.getElementById('customerName').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerAddress: document.getElementById('customerAddress').value,
+                items,
+                tax1Rate: document.getElementById('tax1Input').value,
+                tax2Rate: document.getElementById('tax2Input').value,
+                tax3Rate: document.getElementById('tax3Input').value,
+                grandTotal: document.getElementById('grandTotal').textContent,
+                notes: document.getElementById('invoiceNotes').value,
+                bank: document.getElementById('bankDetails').value,
+                timestamp: Date.now()
+            };
+        }
+        function saveLocally() {
+            const inv = collectInvoice();
+            let invoices = JSON.parse(localStorage.getItem('invoices')||'[]');
+            const idx = invoices.findIndex(i=>i.id===inv.id);
+            if(idx>-1) invoices[idx] = inv;
+            else invoices.unshift(inv);
+            localStorage.setItem('invoices', JSON.stringify(invoices));
+            const shop = { name: inv.shopName, address: inv.shopAddress, contact: inv.shopContact, bank: inv.bank, logo: document.getElementById('logoImg').src || '' };
+            localStorage.setItem('invoice_shop', JSON.stringify(shop));
+            showToast('✅ Invoice saved!');
+        }
+        function shareInvoice() {
+            const text = `🧾 Invoice ${document.getElementById('invoiceId').value}\nTotal: ${document.getElementById('grandTotal').textContent}\nCreated via InvoiceFlow`;
+            if(navigator.share) navigator.share({title:'Invoice', text});
+            else window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        function printInvoice() { window.print(); }
+        function loadLogo(e) {
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById('logoImg').src = ev.target.result;
+                document.getElementById('logoImg').style.display='block';
+                document.getElementById('logoPlaceholder').style.display='none';
+            };
+            reader.readAsDataURL(file);
+        }
+        function showToast(m) {
+            const t = document.createElement('div'); t.className='toast'; t.textContent=m;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        document.getElementById('addItemBtn').addEventListener('click', addRow);
+        document.getElementById('saveLocalBtn').addEventListener('click', saveLocally);
+        document.getElementById('shareBtn').addEventListener('click', shareInvoice);
+        document.getElementById('printBtn').addEventListener('click', printInvoice);
+        document.getElementById('openSettingsBtn').addEventListener('click', openSettingsModal);
+        window.addEventListener('click', (e) => { if(e.target === document.getElementById('settingsModal')) closeSettingsModal(); });
+        addRow();
+
+        ['shopName','shopAddress','shopContact','bankDetails'].forEach(id=>{
+            document.getElementById(id).addEventListener('input', ()=>{
+                localStorage.setItem('invoice_shop', JSON.stringify({
+                    name: document.getElementById('shopName').value,
+                    address: document.getElementById('shopAddress').value,
+                    contact: document.getElementById('shopContact').value,
+                    bank: document.getElementById('bankDetails').value,
+                    logo: document.getElementById('logoImg').src || ''
+                }));
+            });
+        });
+    </script>
+</body>
+</html>

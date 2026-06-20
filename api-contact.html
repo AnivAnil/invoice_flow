@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global API & Contact – InvoiceFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 20px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); padding:20px; }
+        .container { max-width:1000px; margin:0 auto; }
+        header { margin-bottom:30px; }
+        .top-bar {
+            background:rgba(255,255,255,0.85); backdrop-filter:blur(12px);
+            border-radius:60px; padding:12px 24px; box-shadow:var(--shadow); border:1px solid var(--border);
+            display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+        }
+        .logo { font-weight:900; font-size:22px; color:var(--primary); text-decoration:none; display:flex; align-items:center; gap:8px; }
+        .desktop-nav { display:flex; gap:10px; flex-wrap:wrap; }
+        .desktop-nav a { text-decoration:none; font-weight:600; font-size:14px; color:var(--text-muted); padding:8px 16px; border-radius:24px; }
+        .desktop-nav a:hover, .desktop-nav a.active { background:#eff6ff; color:var(--primary); }
+        .desktop-nav a.active { background: var(--primary); color: white; }
+
+        .hamburger { display:none; background:none; border:none; font-size:24px; color:var(--primary); cursor:pointer; padding:8px; }
+        .mobile-nav {
+            display:none; flex-direction:column; gap:4px;
+            background:white; border-radius:20px; padding:12px;
+            box-shadow:0 20px 50px rgba(0,0,0,0.12);
+            position:absolute; top:85px; right:30px; width:220px; z-index:200;
+        }
+        .mobile-nav.show { display:flex; }
+        .mobile-nav a { text-decoration:none; font-weight:600; font-size:14px; color:var(--text-muted); padding:10px 14px; border-radius:12px; }
+        .mobile-nav a:hover { background:#eff6ff; color:var(--primary); }
+
+        .card {
+            background:var(--surface); border-radius:var(--radius); padding:30px; box-shadow:var(--shadow);
+            border:1px solid var(--border); margin-bottom:24px;
+        }
+        h2 { font-weight:800; margin-bottom:16px; }
+        h3 { font-weight:700; margin:20px 0 10px; color: var(--primary); }
+        .code-block {
+            background:#0f172a; color:#f1f5f9; padding:20px; border-radius:16px; font-family:'Courier New',monospace; margin:16px 0; overflow-x:auto; font-size:14px;
+        }
+        .table-params { width:100%; border-collapse: collapse; margin:16px 0; }
+        .table-params th { background:#f8fafc; padding:12px; text-align:left; font-size:12px; font-weight:700; color:var(--text-muted); border-bottom:2px solid var(--border); }
+        .table-params td { padding:12px; border-bottom:1px solid var(--border); font-size:14px; }
+        .contact-highlight { background:#eff6ff; border-radius:20px; padding:20px; text-align:center; margin:24px 0; }
+        footer { text-align:center; margin-top:40px; color:var(--text-muted); font-size:14px; padding-bottom:40px; }
+        footer a { color:var(--primary); text-decoration:none; font-weight:600; }
+        .ad-banner { background:#f1f5f9; border:2px dashed #cbd5e1; border-radius:16px; text-align:center; padding:20px; margin:30px 0; }
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="top-bar">
+                <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
+                <nav class="desktop-nav">
+                    <a href="index.html">Home</a>
+                    <a href="invoice.html">Generator</a>
+                    <a href="api-contact.html" class="active">API & Contact</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="career.html">Careers</a>
+                    <a href="advertise.html">Advertise</a>
+                </nav>
+                <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <a href="index.html">Home</a>
+                <a href="invoice.html">Generator</a>
+                <a href="api-contact.html">API & Contact</a>
+                <a href="terms.html">Terms</a>
+                <a href="career.html">Careers</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="privacy.html">Privacy</a>
+            </div>
+        </header>
+
+        <!-- API Documentation -->
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Global Invoice API (URL‑Based)</h2>
+            <p>Generate a pre‑filled invoice for any country by simply opening <code>invoice.html</code> with query parameters. No authentication, no backend — just a URL.</p>
+
+            <h3>Base URL</h3>
+            <div class="code-block">https://yourdomain.com/invoice.html</div>
+
+            <h3>1. Customer & Invoice Details</h3>
+            <table class="table-params">
+                <tr><th>Parameter</th><th>Description</th><th>Example</th></tr>
+                <tr><td><code>name</code></td><td>Customer / Company Name</td><td><code>John Doe</code></td></tr>
+                <tr><td><code>phone</code></td><td>Customer Phone</td><td><code>+1-555-0100</code></td></tr>
+                <tr><td><code>email</code></td><td>Customer Email</td><td><code>john@example.com</code></td></tr>
+                <tr><td><code>address</code></td><td>Billing Address</td><td><code>123 Main St, New York</code></td></tr>
+                <tr><td><code>notes</code></td><td>Invoice notes / payment terms</td><td><code>Net 30</code></td></tr>
+            </table>
+
+            <h3>2. Global Tax & Currency Settings</h3>
+            <p>Override the default invoice tax and currency for a specific link. Perfect for international businesses.</p>
+            <table class="table-params">
+                <tr><th>Parameter</th><th>Description</th><th>Example</th></tr>
+                <tr><td><code>currency</code></td><td>Currency symbol (3 chars max)</td><td><code>$</code>, <code>€</code>, <code>₹</code></td></tr>
+                <tr><td><code>tax1name</code></td><td>First tax name</td><td><code>VAT</code>, <code>GST</code></td></tr>
+                <tr><td><code>tax1rate</code></td><td>First tax rate (%)</td><td><code>20</code></td></tr>
+                <tr><td><code>tax2name</code></td><td>Second tax name</td><td><code>QST</code></td></tr>
+                <tr><td><code>tax2rate</code></td><td>Second tax rate (%)</td><td><code>9.975</code></td></tr>
+                <tr><td><code>tax3name</code></td><td>Third tax name (optional)</td><td><code>Cess</code></td></tr>
+                <tr><td><code>tax3rate</code></td><td>Third tax rate (%)</td><td><code>0.5</code></td></tr>
+            </table>
+
+            <h3>3. Live Examples</h3>
+            <div class="code-block">
+                <strong>🇮🇳 India (GST)</strong><br>
+                https://yourdomain.com/invoice.html?currency=₹&tax1name=CGST&tax1rate=2.5&tax2name=SGST&tax2rate=2.5&name=Rahul+Sharma&phone=9876543210&email=rahul@example.com&address=Mumbai
+            </div>
+            <div class="code-block">
+                <strong>🇺🇸 USA (Sales Tax)</strong><br>
+                https://yourdomain.com/invoice.html?currency=$&tax1name=State+Tax&tax1rate=8.5&tax2name=&tax2rate=0&name=John+Smith&phone=555-0100&email=john@example.com&address=New+York
+            </div>
+            <div class="code-block">
+                <strong>🇪🇺 Europe (VAT)</strong><br>
+                https://yourdomain.com/invoice.html?currency=€&tax1name=VAT&tax1rate=21&tax2name=&tax2rate=0&name=Marie+Curie&phone=%2B33+1+40+41+12&email=marie@example.fr&address=Paris
+            </div>
+            <div class="code-block">
+                <strong>🇦🇪 UAE (VAT)</strong><br>
+                https://yourdomain.com/invoice.html?currency=د.إ&tax1name=VAT&tax1rate=5&tax2name=&tax2rate=0&name=Ahmed+Al+Falasi&phone=+971+50+123+4567&email=ahmed@example.ae&address=Dubai
+            </div>
+            <p style="margin-top:16px;"><i class="fas fa-info-circle"></i> All parameters are optional. The invoice form will open with the specified fields filled in — you can still edit everything manually.</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="card">
+            <h2><i class="fas fa-envelope-open-text"></i> Contact Our Team</h2>
+            <div class="contact-highlight">
+                <p style="font-size:20px;"><i class="fas fa-phone-alt"></i> <a href="tel:+919514391536" style="color:var(--primary);">+91 95143 91536</a></p>
+                <p style="font-size:18px;"><i class="fas fa-envelope"></i> <a href="mailto:anilsouth65@gmail.com" style="color:var(--primary);">anilsouth65@gmail.com</a></p>
+                <p style="color:var(--text-muted);">We respond within 24 hours. Lifetime free support.</p>
+            </div>
+        </div>
+
+        <div class="ad-banner">📢 Your Ad Here – 728x90 (Replace with AdSense)</div>
+
+        <footer>© 2025 InvoiceFlow — Free Forever — 
+            <a href="tel:+919514391536">+91 95143 91536</a> | 
+            <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> | 
+            <a href="privacy.html">Privacy</a>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => mobileNav.classList.toggle('show'));
+        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('show')));
+    </script>
+</body>
+</html>

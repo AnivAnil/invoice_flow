@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service & Privacy – InvoiceFlow</title>
+    <meta name="description" content="InvoiceFlow's terms of service, privacy policy, and data handling practices. 100% client‑side, no data collection, GDPR friendly.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --border: #e2e8f0;
+            --radius: 24px;
+            --shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            line-height: 1.7;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        /* ── HEADER ── */
+        header { margin-bottom: 30px; }
+        .top-bar {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 12px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .logo {
+            font-weight: 900;
+            font-size: 22px;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        nav { display: flex; gap: 6px; flex-wrap: wrap; }
+        nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: 0.2s;
+        }
+        nav a:hover, nav a.active { background: #eff6ff; color: var(--primary); }
+        nav a.active { background: var(--primary); color: white; }
+
+        /* ── HAMBURGER MENU ── */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: white;
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            position: absolute;
+            top: 85px;
+            right: 30px;
+            width: 220px;
+            z-index: 200;
+        }
+        .mobile-nav.show { display: flex; }
+        .mobile-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 10px 14px;
+            border-radius: 12px;
+        }
+        .mobile-nav a:hover { background: #eff6ff; color: var(--primary); }
+
+        /* ── CONTENT CARDS ── */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+        }
+        .card h3 {
+            font-weight: 700;
+            font-size: 18px;
+            margin: 24px 0 10px;
+            color: var(--primary);
+        }
+        .card p, .card li {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .card ul, .card ol { margin-left: 24px; margin-bottom: 16px; }
+        .card li { margin-bottom: 6px; }
+
+        .toc { background: #f8fafc; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; }
+        .toc a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .toc a:hover { text-decoration: underline; }
+        .toc ol { margin-left: 20px; }
+        .toc li { margin-bottom: 6px; }
+
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin: 0; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dcfce7;
+            color: #166534;
+            margin-right: 8px;
+        }
+
+        .ad-banner {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            text-align: center;
+            padding: 24px;
+            margin: 30px 0;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding-bottom: 40px;
+        }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .card { padding: 24px 20px; }
+            nav.desktop-nav { display: none; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ── HEADER ── -->
+        <header>
+            <div class="top-bar">
+                <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
+                <nav class="desktop-nav">
+                    <a href="index.html">Home</a>
+                    <a href="invoice.html">Generator</a>
+                    <a href="api-contact.html">API & Contact</a>
+                    <a href="terms.html" class="active">Terms</a>
+                    <a href="career.html">Careers</a>
+                    <a href="advertise.html">Advertise</a>
+                </nav>
+                <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <a href="index.html">Home</a>
+                <a href="invoice.html">Generator</a>
+                <a href="api-contact.html">API & Contact</a>
+                <a href="terms.html">Terms</a>
+                <a href="career.html">Careers</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="privacy.html">Privacy</a>
+            </div>
+        </header>
+
+        <!-- ── TABLE OF CONTENTS ── -->
+        <div class="card">
+            <h2><i class="fas fa-gavel"></i> Terms of Service & Privacy</h2>
+            <p><strong>Last updated:</strong> January 2025</p>
+            <p>Please read these terms carefully before using InvoiceFlow. By accessing or using our service, you agree to be bound by these terms.</p>
+            <div class="toc">
+                <h3 style="margin-top:0;">Table of Contents</h3>
+                <ol>
+                    <li><a href="#section1">Acceptance of Terms</a></li>
+                    <li><a href="#section2">Description of Service</a></li>
+                    <li><a href="#section3">User Responsibilities</a></li>
+                    <li><a href="#section4">Intellectual Property</a></li>
+                    <li><a href="#section5">Privacy & Data Handling</a></li>
+                    <li><a href="#section6">Advertising & Third‑Party Content</a></li>
+                    <li><a href="#section7">Limitation of Liability</a></li>
+                    <li><a href="#section8">Disclaimer of Warranties</a></li>
+                    <li><a href="#section9">Indemnification</a></li>
+                    <li><a href="#section10">Governing Law & Dispute Resolution</a></li>
+                    <li><a href="#section11">Changes to Terms</a></li>
+                    <li><a href="#section12">Contact Information</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- ── SECTIONS 1-12 (unchanged from your original) ── -->
+        <div class="card" id="section1">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing or using InvoiceFlow ("the Service"), you acknowledge that you have read, understood, and agree to be legally bound by these Terms of Service ("Terms"). If you do not agree with any part of these Terms, you must discontinue use of the Service immediately.</p>
+            <p>InvoiceFlow reserves the right to update or modify these Terms at any time without prior notice. Your continued use of the Service after any changes constitutes your acceptance of the new Terms. We encourage you to review this page periodically.</p>
+        </div>
+
+        <div class="card" id="section2">
+            <h2>2. Description of Service</h2>
+            <p><span class="badge">Free Forever</span> InvoiceFlow provides a free, browser‑based invoice generation tool. The Service operates entirely on the client side (in your web browser) and does not require user registration or account creation.</p>
+            <h3>Key Features:</h3>
+            <ul>
+                <li>Unlimited invoice generation with customizable tax rates and currency symbols</li>
+                <li>Local storage of invoice data and shop details in your browser</li>
+                <li>URL‑based API for pre‑filling invoice fields</li>
+                <li>Print, share, and save functionality</li>
+                <li>Global tax support (GST, VAT, Sales Tax, etc.)</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section3">
+            <h2>3. User Responsibilities</h2>
+            <p>As a user of InvoiceFlow, you agree to:</p>
+            <ul>
+                <li><strong>Accurate Information:</strong> Ensure that all information you enter into the invoice generator is accurate and truthful. InvoiceFlow is not responsible for any consequences arising from incorrect or fraudulent information.</li>
+                <li><strong>Legal Compliance:</strong> Use the Service in compliance with all applicable local, national, and international laws and regulations, including tax laws and data protection regulations.</li>
+                <li><strong>Data Backup:</strong> Regularly back up your invoice data. InvoiceFlow stores data only in your browser's localStorage, which can be cleared or lost if you clear your browser data or switch devices.</li>
+                <li><strong>No Unlawful Use:</strong> Refrain from using the Service for any unlawful purpose, including but not limited to creating fraudulent invoices, impersonating others, or violating intellectual property rights.</li>
+                <li><strong>No Redistribution:</strong> You may not copy, modify, distribute, sell, or lease any part of the InvoiceFlow software or codebase without explicit written permission.</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section4">
+            <h2>4. Intellectual Property</h2>
+            <p>All content, design, code, graphics, logos, and other materials that are part of InvoiceFlow are the exclusive intellectual property of InvoiceFlow or its licensors. These materials are protected by copyright, trademark, and other intellectual property laws.</p>
+            <ul>
+                <li>You retain full ownership of any invoice content you create using the Service.</li>
+                <li>You may not use the InvoiceFlow name, logo, or branding without prior written consent.</li>
+                <li>You may not reverse‑engineer, decompile, or extract the source code of the Service.</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section5">
+            <h2>5. Privacy & Data Handling</h2>
+            <p><span class="badge">No Data Collection</span> This is the most important section. InvoiceFlow is designed with privacy as a core principle.</p>
+            <div class="highlight-box">
+                <p><strong>🔒 We do NOT collect, store, transmit, or process any of your invoice data on any server.</strong> All invoice information, shop details, logos, and settings are stored exclusively in your browser's localStorage. We have no access to this data.</p>
+            </div>
+            <h3>What We Don't Collect:</h3>
+            <ul>
+                <li>Invoice content (customer names, addresses, items, amounts)</li>
+                <li>Business details (shop name, GSTIN, bank details)</li>
+                <li>Personal information (email, phone numbers)</li>
+                <li>Usage analytics or tracking data</li>
+            </ul>
+            <h3>Contact Form Data:</h3>
+            <p>When you submit a message via our Contact form, we receive only the information you voluntarily provide (name, email, message). This information is used solely to respond to your inquiry and is never shared with third parties.</p>
+            <h3>Data Retention:</h3>
+            <p>Your invoice data remains in your browser until you manually clear it. You can delete all stored data at any time by clearing your browser's localStorage or using your browser's privacy settings.</p>
+        </div>
+
+        <div class="card" id="section6">
+            <h2>6. Advertising & Third‑Party Content</h2>
+            <p>InvoiceFlow is a free service supported by advertisements. By using the Service, you agree to view these advertisements.</p>
+            <ul>
+                <li>We use Google AdSense and may partner with other advertising networks to display ads on our pages.</li>
+                <li>These third‑party ad networks may use cookies or similar technologies to serve relevant ads based on your browsing history. Please refer to Google's Privacy Policy for more information on how they handle data.</li>
+                <li>InvoiceFlow is not responsible for the content, accuracy, or practices of any third‑party advertisements or linked websites.</li>
+                <li>Clicking on any advertisement is at your own discretion and risk.</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section7">
+            <h2>7. Limitation of Liability</h2>
+            <p>To the fullest extent permitted by applicable law, InvoiceFlow and its creators, affiliates, and licensors shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the Service, including but not limited to:</p>
+            <ul>
+                <li>Loss of data or business interruption</li>
+                <li>Inaccurate tax calculations or financial losses</li>
+                <li>Errors or omissions in invoice content</li>
+                <li>Any third‑party claims related to invoices created using the Service</li>
+            </ul>
+            <p>You expressly agree that your use of the Service is at your sole risk.</p>
+        </div>
+
+        <div class="card" id="section8">
+            <h2>8. Disclaimer of Warranties</h2>
+            <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, and non‑infringement.</p>
+            <p>InvoiceFlow does not warrant that:</p>
+            <ul>
+                <li>The Service will be uninterrupted or error‑free</li>
+                <li>Any errors or defects will be corrected</li>
+                <li>The Service is free of viruses or other harmful components</li>
+                <li>Tax calculations are 100% accurate for your jurisdiction (please verify with a tax professional)</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section9">
+            <h2>9. Indemnification</h2>
+            <p>You agree to indemnify, defend, and hold harmless InvoiceFlow, its creators, affiliates, and partners from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising out of or related to:</p>
+            <ul>
+                <li>Your use of the Service</li>
+                <li>Any content you create using the Service</li>
+                <li>Your violation of these Terms</li>
+                <li>Your violation of any third‑party rights or applicable laws</li>
+            </ul>
+        </div>
+
+        <div class="card" id="section10">
+            <h2>10. Governing Law & Dispute Resolution</h2>
+            <p>These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+            <p>Any dispute arising out of or relating to these Terms or the Service shall first be attempted to be resolved through good‑faith negotiations. If the dispute cannot be resolved informally, it shall be subject to the exclusive jurisdiction of the courts located in [Your City/State], India.</p>
+            <p>For users outside India, you agree to comply with all local laws regarding online conduct and acceptable content.</p>
+        </div>
+
+        <div class="card" id="section11">
+            <h2>11. Changes to These Terms</h2>
+            <p>We reserve the right to modify or replace these Terms at any time. If a revision is material, we will make reasonable efforts to provide notice on our website. What constitutes a material change will be determined at our sole discretion.</p>
+            <p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.</p>
+        </div>
+
+        <div class="card" id="section12">
+            <h2>12. Contact Information</h2>
+            <p>If you have any questions, concerns, or complaints about these Terms or our privacy practices, please contact us:</p>
+            <div class="highlight-box">
+                <p>
+                    <i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:anilsouth65@gmail.com" style="color:var(--primary);">anilsouth65@gmail.com</a><br>
+                    <i class="fas fa-phone-alt"></i> <strong>Phone:</strong> <a href="tel:+919514391536" style="color:var(--primary);">+91 95143 91536</a><br>
+                    <i class="fas fa-clock"></i> <strong>Response Time:</strong> Within 24 hours
+                </p>
+            </div>
+            <p style="margin-top:16px;">We are committed to addressing all legitimate concerns promptly and fairly.</p>
+        </div>
+
+        <!-- ── AD BANNER ── -->
+        <div class="ad-banner">📢 Your Ad Here – 728x90 (Replace with Google AdSense)</div>
+
+        <!-- ── FOOTER ── -->
+        <footer>
+            <p>© 2025 InvoiceFlow — <strong>Free Forever, for Everyone</strong> — 
+            <a href="tel:+919514391536">+91 95143 91536</a> | 
+            <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> | 
+            <a href="privacy.html">Privacy</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => mobileNav.classList.toggle('show'));
+        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('show')));
+    </script>
+</body>
+</html>

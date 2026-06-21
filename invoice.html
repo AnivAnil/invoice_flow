@@ -160,12 +160,12 @@
     <div class="top-bar">
         <a href="index.html" class="logo"><i class="fas fa-file-invoice"></i> InvoiceFlow</a>
         <nav class="desktop-nav">
-            <a href="index.html">Home</a>
-            <a href="invoice.html" class="active">Generator</a>
-            <a href="api-contact.html">API & Contact</a>
-            <a href="terms.html">Terms</a>
-            <a href="career.html">Careers</a>
-            <a href="advertise.html">Advertise</a>
+            <a href="index.html" data-lang="nav_home">Home</a>
+            <a href="invoice.html" class="active" data-lang="nav_generator">Generator</a>
+            <a href="api-contact.html" data-lang="nav_api">API & Contact</a>
+            <a href="terms.html" data-lang="nav_terms">Terms</a>
+            <a href="career.html" data-lang="nav_careers">Careers</a>
+            <a href="advertise.html" data-lang="nav_advertise">Advertise</a>
         </nav>
         <div style="display:flex; gap:8px;">
             <button class="lang-btn" id="langBtn" title="Change Language"><i class="fas fa-language"></i></button>
@@ -173,12 +173,12 @@
         </div>
         <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
         <div class="mobile-nav" id="mobileNav">
-            <a href="index.html">Home</a>
-            <a href="invoice.html" class="active">Generator</a>
-            <a href="api-contact.html">API & Contact</a>
-            <a href="terms.html">Terms</a>
-            <a href="career.html">Careers</a>
-            <a href="advertise.html">Advertise</a>
+            <a href="index.html" data-lang="nav_home">Home</a>
+            <a href="invoice.html" class="active" data-lang="nav_generator">Generator</a>
+            <a href="api-contact.html" data-lang="nav_api">API & Contact</a>
+            <a href="terms.html" data-lang="nav_terms">Terms</a>
+            <a href="career.html" data-lang="nav_careers">Careers</a>
+            <a href="advertise.html" data-lang="nav_advertise">Advertise</a>
         </div>
     </div>
 
@@ -194,44 +194,46 @@
                 </div>
                 <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="loadLogo(event)">
                 <div class="shop-fields">
-                    <input class="shop-name" id="shopName" placeholder="YOUR STORE NAME">
-                    <input id="shopAddress" placeholder="Address, City, Country">
-                    <input id="shopContact" placeholder="Phone | Tax ID (VAT/GSTIN)">
+                    <input class="shop-name" id="shopName" placeholder="YOUR STORE NAME" data-lang-placeholder="shop_name_placeholder">
+                    <input id="shopAddress" placeholder="Address, City, Country" data-lang-placeholder="shop_address_placeholder">
+                    <input id="shopContact" placeholder="Phone | Tax ID (VAT/GSTIN)" data-lang-placeholder="shop_contact_placeholder">
                 </div>
             </div>
 
             <!-- Meta Information -->
             <div class="meta-row">
-                <div class="meta-card"><label>Invoice #</label><input id="invoiceId" readonly></div>
-                <div class="meta-card"><label>Date</label><input type="date" id="invoiceDate"></div>
-                <div class="meta-card"><label>Status</label><select id="invoiceStatus">
-                    <option>Paid</option><option>Draft</option><option>Pending</option>
+                <div class="meta-card"><label data-lang="invoice_number">Invoice #</label><input id="invoiceId" readonly></div>
+                <div class="meta-card"><label data-lang="date">Date</label><input type="date" id="invoiceDate"></div>
+                <div class="meta-card"><label data-lang="status">Status</label><select id="invoiceStatus">
+                    <option data-lang="paid">Paid</option>
+                    <option data-lang="draft">Draft</option>
+                    <option data-lang="pending">Pending</option>
                 </select></div>
             </div>
 
             <!-- Customer Details -->
             <div class="customer-section">
-                <h4><i class="fas fa-user-circle"></i> Bill To</h4>
+                <h4><i class="fas fa-user-circle"></i> <span data-lang="bill_to">Bill To</span></h4>
                 <div class="customer-grid">
-                    <input id="customerName" placeholder="Customer/Company Name">
-                    <input id="customerPhone" placeholder="Phone">
-                    <input id="customerEmail" placeholder="Email">
-                    <input id="customerAddress" placeholder="Billing Address">
+                    <input id="customerName" placeholder="Customer/Company Name" data-lang-placeholder="customer_name_placeholder">
+                    <input id="customerPhone" placeholder="Phone" data-lang-placeholder="phone_placeholder">
+                    <input id="customerEmail" placeholder="Email" data-lang-placeholder="email_placeholder">
+                    <input id="customerAddress" placeholder="Billing Address" data-lang-placeholder="address_placeholder">
                 </div>
             </div>
 
             <!-- Tax Settings (Dynamic) -->
             <div class="tax-box" id="taxBox">
-                <h4><i class="fas fa-percent"></i> Tax Settings</h4>
+                <h4><i class="fas fa-percent"></i> <span data-lang="tax_settings">Tax Settings</span></h4>
                 <div class="tax-row" id="taxRow">
-                    <div id="tax1Group"><label>CGST%</label><input id="tax1Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
-                    <div id="tax2Group"><label>SGST%</label><input id="tax2Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
-                    <div id="tax3Group" style="display:none;"><label>Cess%</label><input id="tax3Input" type="number" step="any" value="0" oninput="calcTotal()"></div>
+                    <div id="tax1Group"><label id="tax1Label">CGST%</label><input id="tax1Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax2Group"><label id="tax2Label">SGST%</label><input id="tax2Input" type="number" step="any" value="2.5" oninput="calcTotal()"></div>
+                    <div id="tax3Group" style="display:none;"><label id="tax3Label">Cess%</label><input id="tax3Input" type="number" step="any" value="0" oninput="calcTotal()"></div>
                 </div>
                 <!-- Discount & Shipping -->
                 <div class="discount-shipping-row">
-                    <div><label>Discount (%)</label><input type="number" id="discountInput" step="any" value="0" oninput="calcTotal()"></div>
-                    <div><label>Shipping (₹)</label><input type="number" id="shippingInput" step="any" value="0" oninput="calcTotal()"></div>
+                    <div><label data-lang="discount_label">Discount (%)</label><input type="number" id="discountInput" step="any" value="0" oninput="calcTotal()"></div>
+                    <div><label data-lang="shipping_label">Shipping (₹)</label><input type="number" id="shippingInput" step="any" value="0" oninput="calcTotal()"></div>
                 </div>
             </div>
 
@@ -240,48 +242,52 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Item / Service</th><th>Qty</th><th>Rate (<span id="currencyTableSymbol">₹</span>)</th><th>Amount</th><th></th>
+                            <th data-lang="item_desc">Item / Service</th>
+                            <th data-lang="qty">Qty</th>
+                            <th data-lang="rate">Rate (<span id="currencyTableSymbol">₹</span>)</th>
+                            <th data-lang="amount">Amount</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="itemsBody"></tbody>
                 </table>
             </div>
-            <button class="btn btn-outline add-item-btn" id="addItemBtn"><i class="fas fa-plus-circle"></i> Add Item</button>
+            <button class="btn btn-outline add-item-btn" id="addItemBtn"><i class="fas fa-plus-circle"></i> <span data-lang="add_item">Add Item</span></button>
 
             <!-- Notes & Bank Details -->
             <div class="notes-section">
-                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-sticky-note"></i> Notes</label><textarea id="invoiceNotes" rows="2" placeholder="Payment terms, thank you note..."></textarea></div>
-                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-university"></i> Bank Details</label><textarea id="bankDetails" rows="2" placeholder="Bank name, account number, IFSC..."></textarea></div>
+                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-sticky-note"></i> <span data-lang="notes">Notes</span></label><textarea id="invoiceNotes" rows="2" placeholder="Payment terms, thank you note..." data-lang-placeholder="notes_placeholder"></textarea></div>
+                <div><label style="font-weight:700; margin-bottom:6px; display:block;"><i class="fas fa-university"></i> <span data-lang="bank_details">Bank Details</span></label><textarea id="bankDetails" rows="2" placeholder="Bank name, account number, IFSC..." data-lang-placeholder="bank_placeholder"></textarea></div>
             </div>
 
             <!-- Summary -->
             <div class="summary">
                 <div class="summary-block">
-                    <div class="summary-row"><span>Subtotal</span><span><span id="currencySubtotal">₹</span><span id="subtotal">0.00</span></span></div>
-                    <div class="summary-row" id="discountRow" style="display:none;"><span>Discount (<span id="discountRateDisp">0</span>%)</span><span>-<span id="currencyDiscount">₹</span><span id="discountVal">0.00</span></span></div>
-                    <div class="summary-row" id="tax1SummaryRow"><span>CGST (<span id="tax1RateDisp">2.5</span>%)</span><span><span id="currencyTax1">₹</span><span id="tax1Val">0.00</span></span></div>
-                    <div class="summary-row" id="tax2SummaryRow"><span>SGST (<span id="tax2RateDisp">2.5</span>%)</span><span><span id="currencyTax2">₹</span><span id="tax2Val">0.00</span></span></div>
-                    <div class="summary-row" id="tax3SummaryRow" style="display:none;"><span>Cess (<span id="tax3RateDisp">0</span>%)</span><span><span id="currencyTax3">₹</span><span id="tax3Val">0.00</span></span></div>
-                    <div class="summary-row" id="shippingRow" style="display:none;"><span>Shipping</span><span><span id="currencyShipping">₹</span><span id="shippingVal">0.00</span></span></div>
-                    <div class="summary-row total"><span>Grand Total</span><span><span id="currencyGrand">₹</span><span id="grandTotal">0.00</span></span></div>
+                    <div class="summary-row"><span data-lang="subtotal">Subtotal</span><span><span id="currencySubtotal">₹</span><span id="subtotal">0.00</span></span></div>
+                    <div class="summary-row" id="discountRow" style="display:none;"><span data-lang="discount_row">Discount (<span id="discountRateDisp">0</span>%)</span><span>-<span id="currencyDiscount">₹</span><span id="discountVal">0.00</span></span></div>
+                    <div class="summary-row" id="tax1SummaryRow"><span id="tax1SummaryLabel">CGST (<span id="tax1RateDisp">2.5</span>%)</span><span><span id="currencyTax1">₹</span><span id="tax1Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax2SummaryRow"><span id="tax2SummaryLabel">SGST (<span id="tax2RateDisp">2.5</span>%)</span><span><span id="currencyTax2">₹</span><span id="tax2Val">0.00</span></span></div>
+                    <div class="summary-row" id="tax3SummaryRow" style="display:none;"><span id="tax3SummaryLabel">Cess (<span id="tax3RateDisp">0</span>%)</span><span><span id="currencyTax3">₹</span><span id="tax3Val">0.00</span></span></div>
+                    <div class="summary-row" id="shippingRow" style="display:none;"><span data-lang="shipping_row">Shipping</span><span><span id="currencyShipping">₹</span><span id="shippingVal">0.00</span></span></div>
+                    <div class="summary-row total"><span data-lang="grand_total">Grand Total</span><span><span id="currencyGrand">₹</span><span id="grandTotal">0.00</span></span></div>
                 </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="action-bar">
-                <button class="btn btn-primary" id="saveLocalBtn"><i class="fas fa-save"></i> Save Invoice</button>
-                <button class="btn btn-outline" id="printBtn"><i class="fas fa-print"></i> Print</button>
+                <button class="btn btn-primary" id="saveLocalBtn"><i class="fas fa-save"></i> <span data-lang="save_invoice">Save Invoice</span></button>
+                <button class="btn btn-outline" id="printBtn"><i class="fas fa-print"></i> <span data-lang="print">Print</span></button>
             </div>
 
             <div class="contact-info">
-                <i class="fas fa-headset"></i> Need help? <a href="tel:+919514391536">+91 95143 91536</a> &nbsp;|&nbsp; <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a>
+                <i class="fas fa-headset"></i> <span data-lang="need_help">Need help?</span> <a href="tel:+919514391536">+91 95143 91536</a> &nbsp;|&nbsp; <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 InvoiceFlow — Free Forever, for Everyone. 
+        <p>© 2025 InvoiceFlow — <span data-lang="free_forever">Free Forever, for Everyone.</span> 
         <a href="tel:+919514391536">+91 95143 91536</a> · 
         <a href="mailto:anilsouth65@gmail.com">anilsouth65@gmail.com</a> · 
         <a href="privacy.html">Privacy</a></p>
@@ -290,6 +296,85 @@
     <div id="toastContainer"></div>
 
     <script>
+        // ═══════════════════════
+        // TRANSLATIONS (English + Hindi)
+        // ═══════════════════════
+        const translations = {
+            en: {
+                nav_home: "Home", nav_generator: "Generator", nav_api: "API & Contact", nav_terms: "Terms", nav_careers: "Careers", nav_advertise: "Advertise",
+                shop_name_placeholder: "YOUR STORE NAME",
+                shop_address_placeholder: "Address, City, Country",
+                shop_contact_placeholder: "Phone | Tax ID (VAT/GSTIN)",
+                invoice_number: "Invoice #", date: "Date", status: "Status",
+                paid: "Paid", draft: "Draft", pending: "Pending",
+                bill_to: "Bill To",
+                customer_name_placeholder: "Customer/Company Name",
+                phone_placeholder: "Phone", email_placeholder: "Email", address_placeholder: "Billing Address",
+                tax_settings: "Tax Settings",
+                discount_label: "Discount (%)", shipping_label: "Shipping (₹)",
+                item_desc: "Item / Service", qty: "Qty", rate: "Rate", amount: "Amount",
+                add_item: "Add Item",
+                notes: "Notes", notes_placeholder: "Payment terms, thank you note...",
+                bank_details: "Bank Details", bank_placeholder: "Bank name, account number, IFSC...",
+                subtotal: "Subtotal", discount_row: "Discount", shipping_row: "Shipping",
+                grand_total: "Grand Total",
+                save_invoice: "Save Invoice", print: "Print",
+                need_help: "Need help?", free_forever: "Free Forever, for Everyone.",
+                invoice_saved: "✅ Invoice saved!",
+            },
+            hi: {
+                nav_home: "होम", nav_generator: "जेनरेटर", nav_api: "API और संपर्क", nav_terms: "शर्तें", nav_careers: "करियर", nav_advertise: "विज्ञापन",
+                shop_name_placeholder: "आपकी दुकान का नाम",
+                shop_address_placeholder: "पता, शहर, देश",
+                shop_contact_placeholder: "फ़ोन | कर आईडी (वैट/जीएसटीआईएन)",
+                invoice_number: "चालान संख्या", date: "दिनांक", status: "स्थिति",
+                paid: "भुगतान किया गया", draft: "ड्राफ्ट", pending: "लंबित",
+                bill_to: "बिल प्राप्तकर्ता",
+                customer_name_placeholder: "ग्राहक / कंपनी का नाम",
+                phone_placeholder: "फ़ोन", email_placeholder: "ईमेल", address_placeholder: "बिलिंग पता",
+                tax_settings: "कर सेटिंग्स",
+                discount_label: "छूट (%)", shipping_label: "शिपिंग (₹)",
+                item_desc: "वस्तु / सेवा", qty: "मात्रा", rate: "दर", amount: "राशि",
+                add_item: "आइटम जोड़ें",
+                notes: "नोट्स", notes_placeholder: "भुगतान शर्तें, धन्यवाद नोट...",
+                bank_details: "बैंक विवरण", bank_placeholder: "बैंक का नाम, खाता संख्या, IFSC...",
+                subtotal: "उप-योग", discount_row: "छूट", shipping_row: "शिपिंग",
+                grand_total: "कुल योग",
+                save_invoice: "चालान सहेजें", print: "प्रिंट",
+                need_help: "मदद चाहिए?", free_forever: "सभी के लिए हमेशा मुफ्त।",
+                invoice_saved: "✅ चालान सहेजा गया!",
+            }
+        };
+
+        let currentLang = localStorage.getItem('invoiceflow_lang') || 'en';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('invoiceflow_lang', lang);
+            const t = translations[lang] || translations.en;
+
+            // Update text content
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-lang-placeholder');
+                if (t[key]) el.placeholder = t[key];
+            });
+
+            // Update select options
+            document.querySelectorAll('option[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Update toast messages
+            window._lang = lang; // store for toast usage
+        }
+
         // ═══════════════════════
         // DARK MODE
         // ═══════════════════════
@@ -316,7 +401,7 @@
         });
 
         // ═══════════════════════
-        // CALCULATION – FULLY WORKING
+        // CALCULATION
         // ═══════════════════════
         function addRow() {
             const tr = document.createElement('tr');
@@ -325,7 +410,6 @@
         }
 
         function calcTotal() {
-            // 1. Subtotal
             let subtotal = 0;
             document.querySelectorAll('#itemsBody tr').forEach(row => {
                 const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
@@ -335,15 +419,12 @@
                 subtotal += amt;
             });
 
-            // 2. Discount & Shipping
             const discountPercent = parseFloat(document.getElementById('discountInput')?.value) || 0;
             const shipping = parseFloat(document.getElementById('shippingInput')?.value) || 0;
 
-            // 3. Apply discount to subtotal
             const discountedSubtotal = subtotal * (1 - discountPercent / 100);
             const discountAmount = subtotal - discountedSubtotal;
 
-            // 4. Tax rates
             const tax1Rate = parseFloat(document.getElementById('tax1Input')?.value) || 0;
             const tax2Rate = parseFloat(document.getElementById('tax2Input')?.value) || 0;
             const tax3Rate = parseFloat(document.getElementById('tax3Input')?.value) || 0;
@@ -351,10 +432,8 @@
             const tax2Val = discountedSubtotal * tax2Rate / 100;
             const tax3Val = discountedSubtotal * tax3Rate / 100;
 
-            // 5. Grand total
             const grand = discountedSubtotal + tax1Val + tax2Val + tax3Val + shipping;
 
-            // 6. Update UI
             document.getElementById('subtotal').textContent = subtotal.toFixed(2);
 
             const discountRow = document.getElementById('discountRow');
@@ -420,7 +499,7 @@
             localStorage.setItem('invoices', JSON.stringify(invoices));
             const shop = { name: inv.shopName, address: inv.shopAddress, contact: inv.shopContact, bank: inv.bank, logo: document.getElementById('logoImg').src || '' };
             localStorage.setItem('invoice_shop', JSON.stringify(shop));
-            showToast('✅ Invoice saved!');
+            showToast(translations[currentLang].invoice_saved);
             if (navigator.sendBeacon) navigator.sendBeacon('https://api.countapi.xyz/hit/invoiceflow/invoices');
         }
 
@@ -462,9 +541,10 @@
 
         if (localStorage.getItem('invoiceflow_dark') === 'true') applyDarkMode(true);
         else applyDarkMode(false);
+        applyLanguage(currentLang);
 
         addRow();
-        calcTotal();  // ensure discount/shipping rows are set correctly on load
+        calcTotal();
 
         // ═══════════════════════
         // EVENT LISTENERS
@@ -473,7 +553,10 @@
         document.getElementById('saveLocalBtn').addEventListener('click', saveLocally);
         document.getElementById('printBtn').addEventListener('click', printInvoice);
         document.getElementById('darkModeBtn').addEventListener('click', () => applyDarkMode(!document.body.classList.contains('dark')));
-        document.getElementById('langBtn').addEventListener('click', () => alert('Language toggle works – Hindi can be added here'));
+        document.getElementById('langBtn').addEventListener('click', () => {
+            const nextLang = currentLang === 'en' ? 'hi' : 'en';
+            applyLanguage(nextLang);
+        });
 
         ['shopName','shopAddress','shopContact','bankDetails'].forEach(id => {
             document.getElementById(id).addEventListener('input', () => {
